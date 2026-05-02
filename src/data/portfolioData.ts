@@ -23,6 +23,8 @@ export type Experience = {
 
 export const profile = {
   name: "임한결",
+  careerTitle: "7년차 백엔드 개발자",
+  phone: "010-2004-3942",
   role: "제품·자동화·AI 경험을 갖춘 백엔드 개발자",
   headline:
     "제품과 운영 문제를 이해하고, 백엔드·프론트엔드·자동화·AI를 연결해 실제로 작동하는 시스템을 만드는 개발자입니다.",
@@ -34,7 +36,7 @@ export const profile = {
 };
 
 export const navigation = [
-  { label: "홈", href: "#home" },
+  { label: "소개", href: "#home" },
   { label: "프로젝트", href: "#projects" },
   { label: "강점", href: "#strengths" },
   { label: "기술 스택", href: "#tech-stack" },

@@ -72,17 +72,15 @@ a {
   white-space: nowrap;
 }
 
-.brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.brand-avatar {
+  display: block;
   width: 38px;
   height: 38px;
-  border-radius: 8px;
-  background: var(--ink);
-  color: #f8f4e8;
-  font-size: 0.8rem;
-  letter-spacing: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 1px solid rgba(216, 222, 215, 0.9);
+  box-shadow: 0 2px 8px rgba(37, 52, 46, 0.08);
 }
 
 .site-nav {
@@ -109,13 +107,75 @@ a {
   padding: 82px 0;
 }
 
+.profile-identity {
+  scroll-margin-top: 96px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 28px 0 32px;
+  border-bottom: 1px solid var(--line);
+}
+
+.profile-photo {
+  flex-shrink: 0;
+  width: 240px;
+  height: 240px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+  background: var(--paper-strong);
+  box-shadow: 0 12px 32px rgba(37, 52, 46, 0.1);
+}
+
+.profile-identity-text {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.profile-identity-name {
+  margin: 0;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.profile-identity-career {
+  margin: 0;
+  color: var(--teal);
+  font-size: 1rem;
+  font-weight: 750;
+}
+
+.profile-identity-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  width: fit-content;
+  color: var(--muted);
+  font-size: 0.98rem;
+  font-weight: 650;
+  transition: color 160ms ease;
+}
+
+.profile-identity-phone:hover {
+  color: var(--ink);
+}
+
+.profile-identity-phone svg {
+  flex-shrink: 0;
+  color: var(--sage);
+}
+
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1.04fr) minmax(360px, 0.96fr);
   gap: 56px;
   align-items: center;
   min-height: calc(100vh - 76px);
-  padding-top: 58px;
+  padding-top: 36px;
   padding-bottom: 54px;
 }
 
@@ -543,6 +603,18 @@ h3 {
 @media (max-width: 680px) {
   .site-shell {
     width: min(100% - 22px, 560px);
+  }
+
+  .profile-identity {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px 0 26px;
+  }
+
+  .profile-photo {
+    width: 96px;
+    height: 96px;
   }
 
   .site-header {

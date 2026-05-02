@@ -1,12 +1,13 @@
 import {
-  ArrowUpRight,
   BriefcaseBusiness,
   Code2,
   Github,
   Mail,
   Network,
+  Phone,
   Sparkles,
 } from "lucide-react";
+import profilePhoto from "./assets/profile.png";
 import {
   experiences,
   focusKeywords,
@@ -23,8 +24,15 @@ function App() {
   return (
     <div className="site-shell">
       <header className="site-header">
-        <a className="brand" href="#home" aria-label="홈으로 이동">
-          <span className="brand-mark">YN</span>
+        <a className="brand" href="#top" aria-label="맨 위로 이동">
+          <img
+            className="brand-avatar"
+            src={profilePhoto}
+            alt=""
+            width={38}
+            height={38}
+            decoding="async"
+          />
           <span>{profile.name}</span>
         </a>
         <nav className="site-nav" aria-label="주요 메뉴">
@@ -37,9 +45,38 @@ function App() {
       </header>
 
       <main>
+        <section className="profile-identity" id="top" aria-label="인적 사항">
+          <img
+            className="profile-photo"
+            src={profilePhoto}
+            alt={`${profile.name} 프로필 사진`}
+            width={240}
+            height={240}
+            decoding="async"
+          />
+          <div className="profile-identity-text">
+            <h2 className="profile-identity-name">{profile.name}</h2>
+            <p className="profile-identity-career">{profile.careerTitle}</p>
+            <a
+              className="profile-identity-phone"
+              href={`tel:${profile.phone.replace(/-/g, "")}`}
+            >
+              <Phone size={18} aria-hidden="true" />
+              {profile.phone}
+            </a>
+            <a
+              className="profile-identity-phone"
+              href={`mailto:${profile.email}`}
+            >
+              <Mail size={18} aria-hidden="true" />
+              {profile.email}
+            </a>
+     
+          </div>
+        </section>
+
         <section className="hero section" id="home">
           <div className="hero-content">
-            <p className="eyebrow">백엔드 중심 제품 엔지니어</p>
             <h1>{profile.role}</h1>
             <p className="hero-lead">{profile.headline}</p>
             <p className="hero-copy">{profile.intro}</p>
