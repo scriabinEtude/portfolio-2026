@@ -28,16 +28,15 @@ export const profile = {
     "제품과 운영 문제를 이해하고, 백엔드·프론트엔드·자동화·AI를 연결해 실제로 작동하는 시스템을 만드는 개발자입니다.",
   intro:
     "저는 기능을 단순히 구현하는 것보다, 그 기능이 왜 필요한지와 실제 업무에서 어떻게 쓰이는지를 먼저 이해하려고 합니다. 백엔드를 중심으로 데이터 구조, API, 운영 도구, 프론트엔드, AI 자동화까지 연결하며 현업의 문제를 실제로 줄이는 시스템을 만들어왔습니다.",
-  email: "your.email@example.com",
-  github: "https://github.com/YOUR_ID",
-  resume: "RESUME_LINK",
+  email: "scriabinetude87@gmail.com",
+  github: "https://github.com/scriabinetude",
+  resume: "https://drive.google.com/file/d/1_6yS7LkZ9zV1-V4nB53FbQv22LQl2h63/view?usp=sharing",
 };
 
 export const navigation = [
   { label: "홈", href: "#home" },
   { label: "프로젝트", href: "#projects" },
   { label: "강점", href: "#strengths" },
-  { label: "경력", href: "#experience" },
   { label: "기술 스택", href: "#tech-stack" },
   { label: "연락", href: "#contact" },
 ];
@@ -189,18 +188,18 @@ export const experiences: Experience[] = [
 export const techStack = [
   {
     group: "백엔드",
-    items: ["NestJS", "Spring Boot", "PostgreSQL", "TypeORM", "GraphQL", "REST API"],
+    items: ["Nest.js", "Spring", "PostgreSQL", "ORM", "GraphQL"],
   },
   {
     group: "인프라",
-    items: ["AWS ECS", "AWS SQS", "GitHub Actions", "블루/그린 배포", "배치"],
+    items: ["ECS", "SQS", "Jenkins", "Docker", "Lambda", "GCP", "GitHub Actions", "Vercel"],
   },
   {
     group: "프론트엔드·앱",
-    items: ["Svelte", "React", "Flutter", "MVVM", "백오피스 UI"],
+    items: ["Svelte", "React", "Flutter", "Next.js"],
   },
   {
     group: "AI·자동화",
-    items: ["LangChain", "Hybrid RAG", "Vector DB", "프롬프트 관리", "Slack AI"],
+    items: ["LangChain", "RAG", "Vector", "Harness", "Skills", "MCP", "Claude Code", "Cursor", "Codex"],
   },
 ];

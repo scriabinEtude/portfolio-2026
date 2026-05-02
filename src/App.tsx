@@ -52,10 +52,6 @@ function App() {
                 <Github size={18} aria-hidden="true" />
                 GitHub
               </a>
-              <a className="button" href={profile.resume} target="_blank" rel="noreferrer">
-                <ArrowUpRight size={18} aria-hidden="true" />
-                이력서
-              </a>
             </div>
           </div>
 
@@ -102,8 +98,7 @@ function App() {
 
         <section className="section" id="projects">
           <div className="section-heading">
-            <p className="eyebrow">주요 프로젝트</p>
-            <h2>문제 정의부터 운영 적용까지 연결한 프로젝트</h2>
+            <h2>주요 프로젝트</h2>
           </div>
           <div className="project-list">
             {projects.map((project, index) => (
@@ -132,8 +127,7 @@ function App() {
 
         <section className="section" id="strengths">
           <div className="section-heading">
-            <p className="eyebrow">강점</p>
-            <h2>백엔드 정체성을 중심으로 확장되는 강점</h2>
+            <h2>강점</h2>
           </div>
           <div className="strength-grid">
             {strengths.map((strength, index) => {
@@ -156,34 +150,9 @@ function App() {
           </div>
         </section>
 
-        <section className="section timeline-section" id="experience">
-          <div className="section-heading">
-            <p className="eyebrow">경력</p>
-            <h2>도메인은 달라도 일관되게 쌓아온 문제 해결 방식</h2>
-          </div>
-          <div className="timeline">
-            {experiences.map((experience) => (
-              <article className="timeline-item" key={`${experience.company}-${experience.period}`}>
-                <div className="timeline-period">{experience.period}</div>
-                <div>
-                  <h3>{experience.company}</h3>
-                  <p className="timeline-role">{experience.role}</p>
-                  <p>{experience.description}</p>
-                  <div className="tag-row compact">
-                    {experience.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
         <section className="section tech-section" id="tech-stack">
           <div className="section-heading">
-            <p className="eyebrow">기술 스택</p>
-            <h2>제품과 운영 시스템을 만들기 위해 사용해온 도구들</h2>
+            <h2 >Tech Stack</h2>
           </div>
           <div className="tech-grid">
             {techStack.map((stack) => (
@@ -201,12 +170,7 @@ function App() {
 
         <section className="section contact-section" id="contact">
           <div>
-            <p className="eyebrow">연락</p>
-            <h2>실제로 작동하는 제품 시스템을 함께 만들고 싶습니다.</h2>
-            <p>
-              공개 가능한 이름, 이메일, GitHub, 이력서 링크를 채우면 바로 지원용 포트폴리오로
-              사용할 수 있습니다.
-            </p>
+            <h2>Contact</h2>
           </div>
           <div className="contact-actions">
             <a className="button primary" href={`mailto:${profile.email}`}>
@@ -216,10 +180,6 @@ function App() {
             <a className="button" href={profile.github} target="_blank" rel="noreferrer">
               <Github size={18} aria-hidden="true" />
               GitHub
-            </a>
-            <a className="button" href={profile.resume} target="_blank" rel="noreferrer">
-              <ArrowUpRight size={18} aria-hidden="true" />
-              이력서
             </a>
           </div>
         </section>
