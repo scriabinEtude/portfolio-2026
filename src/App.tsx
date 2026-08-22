@@ -29,6 +29,9 @@ function App() {
           }
         />
 
+        {/* GitHub Pages가 실제로 내보내는 파일 경로. 직접 들어와도 이력서가 뜨게 한다. */}
+        <Route path="index.html" element={<Navigate to="/" replace />} />
+
         <Route path="posts/:slug" element={<LegacyPostRedirect />} />
         <Route path="docs/:slug" element={<Navigate to="/" replace />} />
 
