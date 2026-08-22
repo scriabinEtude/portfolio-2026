@@ -1,0 +1,69 @@
+import { parseFrontmatter, readDate, readString, readStringArray } from "./frontmatter";
+import type { Post, PostMeta } from "./types";
+
+type RawFiles = Record<string, string>;
+
+const postFiles = import.meta.glob("../content/posts/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as RawFiles;
+
+function slugOf(path: string): string {
+  return path.split("/").pop()!.replace(/\.md$/, "");
+}
+
+function toPost(path: string, raw: string): Post {
+  const source = `content/posts/${slugOf(path)}.md`;
+  const { data, body } = parseFrontmatter(raw, source);
+  return {
+    slug: slugOf(path),
+    title: readString(data, "title", source),
+    date: readDate(data, "date", source),
+    category: readString(data, "category", source),
+    summary: readString(data, "summary", source),
+    tags: readStringArray(data, "tags", source),
+    body,
+  };
+}
+
+/** 최신 글이 위로. */
+export const posts: readonly Post[] = Object.entries(postFiles)
+  .map(([path, raw]) => toPost(path, raw))
+  .sort((a, b) => b.date.localeCompare(a.date));
+
+export function findPost(slug: string | undefined): Post | undefined {
+  return posts.find((post) => post.slug === slug);
+}
+
+/** 글에 실제로 쓰인 카테고리만, 처음 등장한 순서대로. */
+export function listCategories(items: readonly PostMeta[]): readonly string[] {
+  return [...new Set(items.map((item) => item.category))];
+}
+
+export function filterByCategory(
+  items: readonly Post[],
+  category: string | null,
+): readonly Post[] {
+  if (category === null) return items;
+  return items.filter((item) => item.category === category);
+}
+
+const MARKUP = /```[\s\S]*?```|[#>*_`\-[\]()!|]/g;
+const CHARS_PER_MINUTE = 450;
+
+/** 대략적인 읽는 시간(분). 마크다운 기호는 빼고 센다. */
+export function readingMinutes(body: string): number {
+  const text = body.replace(MARKUP, "").replace(/\s+/g, "");
+  return Math.max(1, Math.round(text.length / CHARS_PER_MINUTE));
+}
+
+/** 2026-03-12 → 2026.03 */
+export function formatMonth(date: string): string {
+  return date.slice(0, 7).replace("-", ".");
+}
+
+/** 2026-03-12 → 2026.03.12 */
+export function formatDate(date: string): string {
+  return date.replaceAll("-", ".");
+}

@@ -1,0 +1,177 @@
+/* ── 문서 머리 ─────────────────────────────────────────── */
+
+.masthead {
+  padding-bottom: var(--s-6);
+  margin-bottom: var(--s-6);
+  border-bottom: 1px solid var(--rule-2);
+}
+
+.masthead > * {
+  animation: rise 0.5s var(--ease) both;
+}
+
+.masthead > *:nth-child(2) {
+  animation-delay: 0.05s;
+}
+.masthead > *:nth-child(3) {
+  animation-delay: 0.1s;
+}
+.masthead > *:nth-child(4) {
+  animation-delay: 0.15s;
+}
+.masthead > *:nth-child(5) {
+  animation-delay: 0.2s;
+}
+.masthead > *:nth-child(6) {
+  animation-delay: 0.25s;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.masthead-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-bottom: var(--s-5);
+}
+
+.masthead-name {
+  font-size: var(--t-5);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.masthead-role {
+  margin-top: var(--s-2);
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  font-size: var(--t-2);
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.masthead-role-en {
+  font-family: var(--font-mono);
+  font-size: var(--t--1);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.masthead-lead {
+  margin-top: var(--s-4);
+  max-width: var(--measure);
+  color: var(--ink-2);
+}
+
+/* 페이지 제목형 머리 — 포트폴리오 목록·글 상세용 */
+.masthead-title {
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.375rem);
+  font-weight: 700;
+  letter-spacing: -0.032em;
+  line-height: 1.22;
+}
+
+.contact-row {
+  margin-top: var(--s-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+}
+
+.contact-row li {
+  font-family: var(--font-mono);
+  font-size: var(--t--1);
+  color: var(--ink-2);
+}
+
+.contact-row a {
+  border-bottom: 1px solid var(--rule-2);
+  padding-bottom: 1px;
+  transition:
+    color 0.18s var(--ease),
+    border-color 0.18s var(--ease);
+}
+
+.contact-row a:hover {
+  color: var(--mark);
+  border-color: var(--mark);
+}
+
+/* ── 내려받기 버튼 ─────────────────────────────────────── */
+
+.actions {
+  margin-top: var(--s-6);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--t-0);
+  font-weight: 500;
+  line-height: 1;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  transition:
+    background-color 0.18s var(--ease),
+    border-color 0.18s var(--ease),
+    color 0.18s var(--ease);
+}
+
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: progress;
+}
+
+.btn--solid {
+  background: var(--mark);
+  border-color: var(--mark);
+  color: #fff;
+}
+
+.btn--solid:hover:not([disabled]) {
+  background: var(--mark-deep);
+  border-color: var(--mark-deep);
+}
+
+.btn--ghost {
+  border-color: var(--rule-2);
+  color: var(--ink);
+}
+
+.btn--ghost:hover:not([disabled]) {
+  border-color: var(--ink-3);
+  background: var(--paper);
+}
+
+.actions-note {
+  font-family: var(--font-mono);
+  font-size: var(--t--2);
+  color: var(--ink-3);
+  margin-left: var(--s-2);
+}
+
+.actions-error {
+  margin-top: var(--s-3);
+  font-size: var(--t--1);
+  color: #a2301f;
+}

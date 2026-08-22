@@ -1,0 +1,248 @@
+/* ── 레지스터 ──────────────────────────────────────────────
+   이 사이트의 뼈대. 왼쪽 레일에는 기간·분류 같은 키가 오른쪽 맞춤으로 서고,
+   그 사이를 문서 전체를 관통하는 한 줄의 괘선이 나눈다.
+   이력서·포트폴리오 목록·글 머리가 모두 같은 격자를 쓴다. */
+
+.register {
+  position: relative;
+}
+
+.register::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--rail);
+  width: 1px;
+  background: var(--rule);
+  transform-origin: top;
+  animation: rail-draw 0.7s var(--ease) both;
+}
+
+@keyframes rail-draw {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.reg-line {
+  display: grid;
+  grid-template-columns: var(--rail) minmax(0, 1fr);
+  break-inside: avoid;
+}
+
+.reg-key {
+  grid-column: 1;
+  text-align: right;
+  padding-right: var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t--1);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+
+.reg-cell {
+  grid-column: 2;
+  padding-left: var(--gutter);
+  min-width: 0;
+}
+
+/* 섹션 제목은 레일 안에 걸린다 */
+.reg-section + .reg-section {
+  margin-top: var(--s-7);
+}
+
+.reg-heading {
+  font-family: var(--font-sans);
+  font-size: var(--t-0);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+.reg-line--heading {
+  padding-bottom: var(--s-4);
+}
+
+.reg-line--heading .reg-cell {
+  border-bottom: 1px solid var(--rule-2);
+}
+
+.reg-line + .reg-line {
+  padding-top: var(--s-6);
+}
+
+.reg-line--heading + .reg-line {
+  padding-top: var(--s-4);
+}
+
+/* ── 기록 한 건 ─────────────────────────────────────────── */
+
+.rail-line {
+  display: block;
+}
+
+.rail-note {
+  font-size: var(--t--2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  opacity: 0.75;
+}
+
+.rec-title {
+  font-size: var(--t-2);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.45;
+}
+
+.rec-meta {
+  margin-top: var(--s-1);
+  font-size: var(--t-0);
+  color: var(--ink-3);
+}
+
+.rec-summary {
+  margin-top: var(--s-2);
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+.rec-group {
+  margin-top: var(--s-3);
+}
+
+.rec-group-title {
+  font-family: var(--font-mono);
+  font-size: var(--t--2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: var(--s-1);
+}
+
+.rec-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+
+.rec-bullets li {
+  position: relative;
+  padding-left: var(--s-4);
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+.rec-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.75em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--rule-2);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.rec-bullets--result li::before {
+  background: var(--mark);
+}
+
+/* ── 기술 태그 ─────────────────────────────────────────── */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+
+.chips li {
+  font-family: var(--font-mono);
+  font-size: var(--t--2);
+  line-height: 1;
+  padding: 5px 8px;
+  color: var(--ink-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.chips--flush {
+  margin-top: 0;
+}
+
+.chips--plain {
+  margin-top: var(--s-2);
+}
+
+.chips--plain li {
+  border: none;
+  padding: 0;
+  color: var(--ink-3);
+}
+
+@media (max-width: 44rem) {
+  .register::before {
+    display: none;
+  }
+
+  .reg-line {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .reg-key {
+    grid-column: 1;
+    text-align: left;
+    padding-right: 0;
+    padding-bottom: var(--s-2);
+  }
+
+  .reg-cell {
+    grid-column: 1;
+    padding-left: 0;
+  }
+
+  .reg-line--heading .reg-cell {
+    border-bottom: none;
+  }
+
+  .reg-line--heading .reg-heading {
+    padding-bottom: var(--s-2);
+    border-bottom: 1px solid var(--rule-2);
+  }
+}
+
+/* 산문형 섹션 */
+.prose-block {
+  color: var(--ink-2);
+  max-width: var(--measure);
+}
+
+.prose-block p + p {
+  margin-top: var(--s-3);
+}
+
+/* 개발 중에만 보이는 안내 */
+.dev-note {
+  margin-bottom: var(--s-6);
+  padding: var(--s-3) var(--s-4);
+  font-size: var(--t--1);
+  color: var(--ink-3);
+  background: var(--mark-wash);
+  border-radius: var(--radius);
+}
+
+.dev-note code {
+  font-family: var(--font-mono);
+  font-size: var(--t--2);
+  color: var(--mark-deep);
+}

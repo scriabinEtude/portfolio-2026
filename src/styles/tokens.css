@@ -1,0 +1,54 @@
+/* 디자인 토큰. 색·타입·간격·판형은 전부 여기서만 정의한다. */
+:root {
+  color-scheme: light;
+
+  /* 지면과 종이 — 문서 한 장이 책상 위에 놓인 상태 */
+  --paper: #f0efec;
+  --sheet: #ffffff;
+  --ink: #17191c;
+  --ink-2: #4b5057;
+  --ink-3: #7c828a;
+  --rule: #e6e4df;
+  --rule-2: #d1cec7;
+
+  /* 강조는 잉크 블루 하나뿐 */
+  --mark: #1f3fa8;
+  --mark-deep: #16307f;
+  --mark-wash: #eef1fb;
+
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  /* 라틴·숫자는 모노, 한글은 없으므로 Pretendard로 떨어진다 */
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, "Pretendard Variable",
+    Pretendard, sans-serif;
+
+  --t--2: 0.6875rem;
+  --t--1: 0.8125rem;
+  --t-0: 0.9375rem;
+  --t-1: 1rem;
+  --t-2: 1.0625rem;
+  --t-3: 1.3125rem;
+  --t-4: 1.625rem;
+  --t-5: clamp(2rem, 1.35rem + 2.7vw, 3rem);
+
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 2.75rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+
+  /* 판형 — A4(210mm) 18mm 여백 기준 판면 174mm ≈ 658px ≈ 41rem */
+  --rail: 7rem; /* mono 키 레일 */
+  --gutter: 2rem; /* 레일과 본문 사이 */
+  --measure: 32rem; /* 본문 한 줄 길이 */
+  --sheet-w: calc(var(--rail) + var(--gutter) + var(--measure)); /* 판면 */
+  --sheet-pad: clamp(1.25rem, 0.5rem + 3.4vw, 3.25rem); /* 판면 바깥 여백 */
+  --sheet-outer: calc(var(--sheet-w) + var(--sheet-pad) * 2);
+
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --radius: 2px;
+}

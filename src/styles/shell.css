@@ -1,0 +1,155 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ── 상단 메뉴 ─────────────────────────────────────────── */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-header-inner {
+  max-width: var(--sheet-outer);
+  margin-inline: auto;
+  padding: var(--s-3) var(--sheet-pad);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-5);
+}
+
+.brand {
+  font-size: var(--t-1);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--s-3);
+}
+
+.brand-role {
+  font-family: var(--font-mono);
+  font-size: var(--t--2);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.site-nav {
+  display: flex;
+  gap: var(--s-5);
+}
+
+.site-nav a {
+  position: relative;
+  font-size: var(--t-0);
+  font-weight: 500;
+  color: var(--ink-3);
+  padding-block: var(--s-2);
+  transition: color 0.18s var(--ease);
+}
+
+.site-nav a:hover {
+  color: var(--ink);
+}
+
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--mark);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s var(--ease);
+}
+
+.site-nav a.is-active {
+  color: var(--ink);
+}
+
+.site-nav a.is-active::after {
+  transform: scaleX(1);
+}
+
+/* ── 본문 영역과 종이 판 ─────────────────────────────────── */
+
+.main {
+  flex: 1;
+  padding: var(--s-7) var(--s-5) var(--s-9);
+}
+
+.sheet {
+  max-width: var(--sheet-outer);
+  margin-inline: auto;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--sheet-pad);
+  box-shadow:
+    0 1px 2px rgb(20 22 26 / 4%),
+    0 18px 40px -28px rgb(20 22 26 / 30%);
+}
+
+/* 목차를 옆에 세우기 위한 3열 격자. 좁은 화면에서는 가운데 열만 남는다. */
+.doc-grid {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, var(--sheet-outer)) 1fr;
+  align-items: start;
+  gap: 0;
+}
+
+.doc-grid > .sheet {
+  grid-column: 2;
+}
+
+/* ── 하단 ──────────────────────────────────────────────── */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding-block: var(--s-5);
+}
+
+.site-footer-inner {
+  max-width: var(--sheet-outer);
+  margin-inline: auto;
+  padding-inline: var(--sheet-pad);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-3) var(--s-5);
+}
+
+.footer-links {
+  display: flex;
+  gap: var(--s-4);
+}
+
+.footer-links a {
+  transition: color 0.18s var(--ease);
+}
+
+.footer-links a:hover {
+  color: var(--mark);
+}
+
+@media (max-width: 34rem) {
+  .brand-role {
+    display: none;
+  }
+
+  .main {
+    padding-inline: var(--s-3);
+  }
+}

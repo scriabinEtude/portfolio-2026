@@ -1,0 +1,260 @@
+/* ── 글 상세 ───────────────────────────────────────────── */
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: var(--t--1);
+  color: var(--ink-3);
+  margin-bottom: var(--s-5);
+  transition: color 0.18s var(--ease);
+}
+
+.back-link:hover {
+  color: var(--mark);
+}
+
+.article-title {
+  font-size: clamp(1.75rem, 1.25rem + 2vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.22;
+}
+
+/* ── 마크다운 본문 ─────────────────────────────────────── */
+
+.prose {
+  color: var(--ink-2);
+}
+
+.prose > * {
+  max-width: var(--measure);
+}
+
+.prose > h2 {
+  max-width: none;
+  margin: var(--s-7) 0 var(--s-3);
+  padding-bottom: var(--s-2);
+  border-bottom: 1px solid var(--rule);
+  font-size: var(--t-3);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  scroll-margin-top: 5rem;
+}
+
+.prose > h3 {
+  margin: var(--s-6) 0 var(--s-2);
+  font-size: var(--t-2);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  scroll-margin-top: 5rem;
+}
+
+.prose > p {
+  margin: var(--s-4) 0;
+}
+
+.prose > ul,
+.prose > ol {
+  margin: var(--s-4) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.prose li {
+  position: relative;
+  padding-left: var(--s-5);
+}
+
+.prose > ul > li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 0.75em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--rule-2);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.prose > ol {
+  counter-reset: prose-ol;
+}
+
+.prose > ol > li::before {
+  counter-increment: prose-ol;
+  content: counter(prose-ol) ".";
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t--1);
+  color: var(--ink-3);
+}
+
+.prose blockquote {
+  margin: var(--s-5) 0;
+  padding: var(--s-1) 0 var(--s-1) var(--s-5);
+  border-left: 2px solid var(--mark);
+  color: var(--ink-3);
+}
+
+.prose blockquote p {
+  margin: var(--s-2) 0;
+}
+
+.prose a {
+  color: var(--mark);
+  border-bottom: 1px solid color-mix(in srgb, var(--mark) 35%, transparent);
+  transition: border-color 0.18s var(--ease);
+}
+
+.prose a:hover {
+  border-color: var(--mark);
+}
+
+.prose strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 2px 5px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.prose pre {
+  max-width: none;
+  margin: var(--s-5) 0;
+  padding: var(--s-4);
+  overflow-x: auto;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.prose pre code {
+  padding: 0;
+  background: none;
+  border: none;
+  font-size: var(--t--1);
+  line-height: 1.7;
+}
+
+.prose hr {
+  max-width: none;
+  margin: var(--s-7) 0;
+  border: none;
+  border-top: 1px solid var(--rule);
+}
+
+.prose table {
+  max-width: none;
+  width: 100%;
+  margin: var(--s-5) 0;
+  border-collapse: collapse;
+  font-size: var(--t-0);
+}
+
+.prose th,
+.prose td {
+  text-align: left;
+  padding: var(--s-3) var(--s-3) var(--s-3) 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+
+.prose th {
+  font-family: var(--font-mono);
+  font-size: var(--t--2);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  border-bottom-color: var(--rule-2);
+}
+
+.prose img {
+  max-width: 100%;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.prose > :first-child {
+  margin-top: 0;
+}
+
+/* ── 목차 ──────────────────────────────────────────────── */
+
+.toc {
+  grid-column: 1;
+  justify-self: end;
+  position: sticky;
+  top: 5rem;
+  width: 12.5rem;
+  padding-right: var(--s-6);
+  padding-top: var(--s-6);
+}
+
+.toc-label {
+  font-family: var(--font-mono);
+  font-size: var(--t--2);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-bottom: var(--s-3);
+  margin-bottom: var(--s-3);
+  border-bottom: 1px solid var(--rule);
+}
+
+.toc ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.toc a {
+  display: block;
+  font-size: var(--t--1);
+  line-height: 1.45;
+  color: var(--ink-3);
+  transition: color 0.18s var(--ease);
+}
+
+.toc a:hover {
+  color: var(--ink);
+}
+
+.toc-item--sub a {
+  padding-left: var(--s-3);
+}
+
+.toc a.is-current {
+  color: var(--mark);
+  font-weight: 500;
+}
+
+@media (max-width: 74rem) {
+  .toc {
+    display: none;
+  }
+}
+
+/* ── 404 ──────────────────────────────────────────────── */
+
+.notfound-action {
+  margin-top: var(--s-6);
+}
