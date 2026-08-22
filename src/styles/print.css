@@ -77,19 +77,30 @@
     border-radius: 2px;
   }
 
-  .section,
-  .job,
+  /* 한 쪽보다 길어질 수 있는 덩어리(.section, .job)에는 break-inside를 걸지 않는다.
+     걸면 통째로 다음 장으로 밀려 앞 장이 비어버린다. */
   .project,
+  .points > li,
+  .rows,
+  .facts,
   .article-head {
     break-inside: avoid;
   }
 
   .section-title,
   .job-head,
+  .job-role,
   .project-name,
+  .points-label,
   .prose > h2,
   .prose > h3 {
     break-after: avoid;
+  }
+
+  p,
+  .points > li {
+    orphans: 2;
+    widows: 2;
   }
 
   .prose pre,
