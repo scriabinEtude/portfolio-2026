@@ -1,3 +1,4 @@
+import profileUrl from "../../assets/profile.jpg";
 import { formatPeriod, joinValues, toBullet } from "../resume";
 import { site } from "../site";
 import type {
@@ -19,6 +20,8 @@ const CONTENT_WIDTH = 9865; // 174mm
 const LABEL_WIDTH = 1701; // 30mm
 const WHEN_WIDTH = 1701;
 const PROJECT_INDENT = 340; // 6mm
+const PHOTO_WIDTH = 1701; // 30mm — 증명사진 3×4cm
+const PHOTO_PX = { width: 113, height: 151 };
 
 /** Word 기본 한글 글꼴. 맥·윈도 양쪽에서 안전한 조합. */
 const FONT = { ascii: "Arial", eastAsia: "맑은 고딕", hAnsi: "Arial" };
@@ -38,6 +41,8 @@ type RunOptions = {
 export async function buildResumeDocx(resume: Resume): Promise<Blob> {
   const d = await import("docx");
 
+  const photo = await loadProfile();
+
   const doc = new d.Document({
     creator: site.name,
     title: `${site.name} 이력서`,
@@ -53,12 +58,26 @@ export async function buildResumeDocx(resume: Resume): Promise<Blob> {
     sections: [
       {
         properties: { page: { margin: PAGE_MARGIN } },
-        children: [...hero(d, resume), ...resume.sections.flatMap((s) => section(d, s))],
+        children: [
+          ...hero(d, resume, photo),
+          ...resume.sections.flatMap((s) => section(d, s)),
+        ],
       },
     ],
   });
 
   return d.Packer.toBlob(doc);
+}
+
+/** 증명사진을 바이트로 읽는다. 못 읽으면 사진 없이 만든다. */
+async function loadProfile(): Promise<ArrayBuffer | null> {
+  try {
+    const response = await fetch(profileUrl);
+    if (!response.ok) return null;
+    return await response.arrayBuffer();
+  } catch {
+    return null;
+  }
 }
 
 /* ── 조각들 ────────────────────────────────────────────── */
@@ -73,8 +92,8 @@ function text(d: Docx, value: string, options: RunOptions = {}) {
   });
 }
 
-function hero(d: Docx, resume: Resume): Child[] {
-  return [
+function hero(d: Docx, resume: Resume, photo: ArrayBuffer | null): Child[] {
+  const identity = [
     new d.Paragraph({
       spacing: { after: 40 },
       children: [text(d, site.name, { size: 44, color: INK, bold: true })],
@@ -84,17 +103,29 @@ function hero(d: Docx, resume: Resume): Child[] {
       children: [text(d, `${site.role} · ${site.roleEn}`, { size: 21, color: INK_2 })],
     }),
     new d.Paragraph({
-      spacing: { after: 120 },
+      spacing: { after: 0 },
       children: [text(d, resume.tagline)],
     }),
-    new d.Paragraph({
-      spacing: { after: 200 },
-      border: { bottom: { style: d.BorderStyle.SINGLE, size: 6, color: RULE, space: 8 } },
-      children: [
-        text(d, [site.email, site.githubHandle].join("   ·   "), { size: 17, color: INK_2 }),
-      ],
-    }),
   ];
+
+  const contacts = new d.Paragraph({
+    spacing: { before: 160, after: 200 },
+    border: { bottom: { style: d.BorderStyle.SINGLE, size: 6, color: RULE, space: 8 } },
+    children: [
+      text(d, [site.email, site.githubHandle].join("   ·   "), { size: 17, color: INK_2 }),
+    ],
+  });
+
+  if (photo === null) return [...identity, contacts];
+
+  // 화면과 같이 이름은 왼쪽, 사진은 오른쪽 위에 놓는다.
+  const image = new d.Paragraph({
+    alignment: d.AlignmentType.RIGHT,
+    spacing: { after: 0 },
+    children: [new d.ImageRun({ type: "jpg", data: photo, transformation: PHOTO_PX })],
+  });
+
+  return [grid(d, [CONTENT_WIDTH - PHOTO_WIDTH, PHOTO_WIDTH], [[identity, [image]]]), contacts];
 }
 
 function sectionTitle(d: Docx, title: string) {

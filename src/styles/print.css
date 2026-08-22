@@ -69,6 +69,12 @@
 
   .hero {
     padding-top: 0;
+    gap: var(--s-6);
+  }
+
+  .hero-photo {
+    width: 30mm; /* 증명사진 3×4cm */
+    border-radius: 2px;
   }
 
   .section,

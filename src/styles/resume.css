@@ -2,6 +2,25 @@
 
 .hero {
   padding: var(--s-9) 0 var(--s-8);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-7);
+}
+
+.hero-body {
+  min-width: 0;
+}
+
+/* 3:4 증명사진. 화면 110px ≈ 인쇄 30mm로 실물 규격과 맞춘다. */
+.hero-photo {
+  flex: none;
+  width: 110px;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: var(--r-md);
+  border: 1px solid var(--line);
 }
 
 .hero-name {
@@ -303,5 +322,16 @@
   .job-head {
     flex-direction: column;
     gap: 2px;
+  }
+
+  /* 좁은 화면에서는 사진이 이름 위로 올라간다 */
+  .hero {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: var(--s-5);
+  }
+
+  .hero-photo {
+    width: 92px;
   }
 }
