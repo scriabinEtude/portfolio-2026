@@ -167,8 +167,14 @@ export const resume: Resume = {
       title: "학력 · 자격 · 병역",
       facts: [
         {
-          id: "education",
+          id: "edu-credit-bank",
           label: "학력",
+          title: "학점은행제",
+          detail: "컴퓨터공학 졸업 예정",
+          when: "2027.02",
+        },
+        {
+          id: "edu-myongji",
           title: "명지대학교",
           detail: "국어국문학과 중퇴",
           when: "2013.03 — 2014.01",

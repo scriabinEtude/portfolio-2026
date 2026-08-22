@@ -14,7 +14,7 @@
 .hero-role {
   margin-top: var(--s-1);
   font-size: var(--t-base);
-  color: var(--fg-3);
+  color: var(--fg-2);
 }
 
 .hero-lead {
@@ -30,7 +30,7 @@
   flex-wrap: wrap;
   gap: var(--s-2) var(--s-5);
   font-size: var(--t-md);
-  color: var(--fg-3);
+  color: var(--fg-2);
 }
 
 .hero-links a {
@@ -62,9 +62,9 @@
 }
 
 .section-title {
-  font-size: var(--t-xs);
+  font-size: var(--t-sm);
   font-weight: 600;
-  color: var(--fg-3);
+  color: var(--fg);
   letter-spacing: 0.02em;
   margin-bottom: var(--s-5);
 }
@@ -93,7 +93,7 @@
 
 .job-when {
   font-size: var(--t-sm);
-  color: var(--fg-3);
+  color: var(--fg-2);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
@@ -101,7 +101,7 @@
 .job-role {
   margin-top: 2px;
   font-size: var(--t-sm);
-  color: var(--fg-3);
+  color: var(--fg-2);
 }
 
 .job-desc {
@@ -141,7 +141,7 @@
   margin-top: var(--s-3);
   font-size: var(--t-xs);
   font-weight: 600;
-  color: var(--fg-3);
+  color: var(--fg);
 }
 
 /* ── 항목 목록 ─────────────────────────────────────────── */
@@ -168,7 +168,7 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #c6cad1;
+  background: var(--marker);
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
 }
@@ -183,7 +183,7 @@
 .points-sub > li {
   position: relative;
   padding-left: 15px;
-  color: var(--fg-3);
+  color: var(--fg-2);
   font-size: var(--t-sm);
 }
 
@@ -194,7 +194,7 @@
   top: 0.85em;
   width: 7px;
   height: 1px;
-  background: #d5d8dd;
+  background: var(--marker);
   print-color-adjust: exact;
   -webkit-print-color-adjust: exact;
 }
@@ -211,7 +211,8 @@
 
 .rows dt {
   font-size: var(--t-sm);
-  color: var(--fg-3);
+  font-weight: 550;
+  color: var(--fg);
 }
 
 .rows dd {
@@ -229,7 +230,8 @@
 
 .fact-key {
   font-size: var(--t-sm);
-  color: var(--fg-3);
+  font-weight: 550;
+  color: var(--fg);
 }
 
 .fact-value {
@@ -244,7 +246,7 @@
 
 .fact-when {
   font-size: var(--t-sm);
-  color: var(--fg-3);
+  color: var(--fg-2);
   text-align: right;
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
@@ -266,7 +268,7 @@
   margin-top: var(--s-6);
   padding: var(--s-3) var(--s-4);
   font-size: var(--t-sm);
-  color: var(--fg-3);
+  color: var(--fg-2);
   background: var(--hover);
   border-radius: var(--r-sm);
 }

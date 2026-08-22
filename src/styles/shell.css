@@ -39,7 +39,7 @@
 }
 
 .site-nav a {
-  color: var(--fg-3);
+  color: var(--fg-2);
   transition: color 0.15s var(--ease);
 }
 
@@ -105,7 +105,7 @@
 
 .btn--ghost {
   border-color: var(--field);
-  color: var(--fg-2);
+  color: var(--fg);
 }
 
 .btn--ghost:hover:not([disabled]) {
@@ -154,7 +154,7 @@
   justify-content: space-between;
   gap: var(--s-2) var(--s-5);
   font-size: var(--t-sm);
-  color: var(--fg-3);
+  color: var(--fg-2);
 }
 
 .footer-links {

@@ -23,9 +23,9 @@ const PROJECT_INDENT = 340; // 6mm
 /** Word 기본 한글 글꼴. 맥·윈도 양쪽에서 안전한 조합. */
 const FONT = { ascii: "Arial", eastAsia: "맑은 고딕", hAnsi: "Arial" };
 
-const INK = "16181C";
-const INK_2 = "494F57";
-const INK_3 = "8A9099";
+/* 화면과 같은 기준. 옅은 회색 글씨는 두지 않는다. */
+const INK = "14161A";
+const INK_2 = "24272C";
 const RULE = "DCDCE0";
 
 type RunOptions = {
@@ -81,7 +81,7 @@ function hero(d: Docx, resume: Resume): Child[] {
     }),
     new d.Paragraph({
       spacing: { after: 120 },
-      children: [text(d, `${site.role} · ${site.roleEn}`, { size: 21, color: INK_3 })],
+      children: [text(d, `${site.role} · ${site.roleEn}`, { size: 21, color: INK_2 })],
     }),
     new d.Paragraph({
       spacing: { after: 120 },
@@ -91,7 +91,7 @@ function hero(d: Docx, resume: Resume): Child[] {
       spacing: { after: 200 },
       border: { bottom: { style: d.BorderStyle.SINGLE, size: 6, color: RULE, space: 8 } },
       children: [
-        text(d, [site.email, site.githubHandle].join("   ·   "), { size: 17, color: INK_3 }),
+        text(d, [site.email, site.githubHandle].join("   ·   "), { size: 17, color: INK_2 }),
       ],
     }),
   ];
@@ -101,7 +101,7 @@ function sectionTitle(d: Docx, title: string) {
   return new d.Paragraph({
     spacing: { before: 300, after: 140 },
     border: { bottom: { style: d.BorderStyle.SINGLE, size: 6, color: RULE, space: 6 } },
-    children: [text(d, title, { size: 20, color: INK_3, bold: true })],
+    children: [text(d, title, { size: 20, color: INK, bold: true })],
   });
 }
 
@@ -144,7 +144,7 @@ function section(d: Docx, input: ResumeSection): Child[] {
 function label(d: Docx, value: string) {
   return new d.Paragraph({
     spacing: { after: 0 },
-    children: [text(d, value, { size: 18, color: INK_3 })],
+    children: [text(d, value, { size: 18, color: INK, bold: true })],
   });
 }
 
@@ -157,7 +157,7 @@ function factRow(d: Docx, fact: Fact): Para[][] {
       new d.Paragraph({
         alignment: d.AlignmentType.RIGHT,
         spacing: { after: 0 },
-        children: [text(d, fact.when ?? "", { size: 18, color: INK_3 })],
+        children: [text(d, fact.when ?? "", { size: 18, color: INK_2 })],
       }),
     ],
   ];
@@ -177,7 +177,7 @@ function job(d: Docx, record: ResumeRecord): Para[] {
           children: [new d.Tab(), formatPeriod(record.period)],
           font: FONT,
           size: 18,
-          color: INK_3,
+          color: INK_2,
         }),
       ],
     }),
@@ -187,7 +187,7 @@ function job(d: Docx, record: ResumeRecord): Para[] {
     paragraphs.push(
       new d.Paragraph({
         spacing: { after: 80 },
-        children: [text(d, record.meta, { size: 18, color: INK_3 })],
+        children: [text(d, record.meta, { size: 18, color: INK_2 })],
       }),
     );
   }
@@ -224,7 +224,7 @@ function projectParagraphs(d: Docx, project: ResumeProject): Para[] {
       new d.Paragraph({
         indent,
         spacing: { before: 100, after: 20 },
-        children: [text(d, "주요 성과", { size: 16, color: INK_3, bold: true })],
+        children: [text(d, "주요 성과", { size: 16, color: INK, bold: true })],
       }),
     );
     paragraphs.push(...bullets(d, project.achievements, PROJECT_INDENT));
@@ -251,7 +251,7 @@ function bullets(d: Docx, items: readonly BulletInput[], offset: number): Para[]
         new d.Paragraph({
           bullet: { level: 1 },
           indent: { left: offset + 720 },
-          children: [text(d, item, { size: 18, color: INK_3 })],
+          children: [text(d, item, { size: 18, color: INK_2 })],
         }),
       );
     }

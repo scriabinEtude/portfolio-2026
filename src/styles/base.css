@@ -74,7 +74,7 @@ svg {
 
 .meta {
   font-size: var(--t-sm);
-  color: var(--fg-3);
+  color: var(--fg-2);
   font-variant-numeric: tabular-nums;
 }
 

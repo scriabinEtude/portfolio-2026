@@ -15,7 +15,7 @@
   padding: 8px 13px;
   border-radius: 999px;
   border: 1px solid var(--line);
-  color: var(--fg-3);
+  color: var(--fg-2);
   transition:
     background-color 0.15s var(--ease),
     border-color 0.15s var(--ease),
@@ -36,7 +36,7 @@
 .filter-count {
   margin-left: auto;
   font-size: var(--t-xs);
-  color: var(--fg-3);
+  color: var(--fg-2);
 }
 
 .post-list {
@@ -59,7 +59,7 @@
 
 .post-meta {
   font-size: var(--t-xs);
-  color: var(--fg-3);
+  color: var(--fg-2);
   font-variant-numeric: tabular-nums;
 }
 
@@ -89,11 +89,11 @@
   flex-wrap: wrap;
   gap: var(--s-2);
   font-size: var(--t-xs);
-  color: var(--fg-3);
+  color: var(--fg-2);
 }
 
 .empty-note {
   padding: var(--s-5) 0;
-  color: var(--fg-3);
+  color: var(--fg-2);
   font-size: var(--t-md);
 }
