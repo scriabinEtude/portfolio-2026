@@ -1,6 +1,13 @@
 import { Fragment } from "react";
 import { formatPeriod, joinValues, toBullet } from "../lib/resume";
-import type { BulletInput, Fact, ResumeProject, ResumeRecord, ResumeSection } from "../lib/types";
+import type {
+  BulletInput,
+  Claim,
+  Fact,
+  ResumeProject,
+  ResumeRecord,
+  ResumeSection,
+} from "../lib/types";
 
 /* 항목이 재정렬되지 않는 고정 목록이므로 인덱스를 키로 쓴다.
    내용이 같은 줄이 겹칠 수 있어 문자열은 키로 쓸 수 없다. */
@@ -18,6 +25,18 @@ function Points({ items }: { readonly items: readonly BulletInput[] }) {
               ))}
             </ul>
           )}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Claims({ claims }: { readonly claims: readonly Claim[] }) {
+  return (
+    <ul className="points points--claims">
+      {claims.map((claim) => (
+        <li key={claim.id}>
+          <strong className="claim-lead">{claim.lead}</strong> {claim.body}
         </li>
       ))}
     </ul>
@@ -90,6 +109,9 @@ function SectionBody({ section }: { readonly section: ResumeSection }) {
           ))}
         </div>
       );
+
+    case "claims":
+      return <Claims claims={section.claims} />;
 
     case "records":
       return (

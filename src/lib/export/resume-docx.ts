@@ -3,6 +3,7 @@ import { formatPeriod, joinValues, toBullet } from "../resume";
 import { site } from "../site";
 import type {
   BulletInput,
+  Claim,
   Fact,
   Resume,
   ResumeProject,
@@ -144,6 +145,9 @@ function section(d: Docx, input: ResumeSection): Child[] {
         ...input.paragraphs.map((p) => new d.Paragraph({ children: [text(d, p)] })),
       ];
 
+    case "claims":
+      return [sectionTitle(d, input.title), ...input.claims.map((c) => claim(d, c))];
+
     case "records":
       return [sectionTitle(d, input.title), ...input.records.flatMap((r) => job(d, r))];
 
@@ -170,6 +174,16 @@ function section(d: Docx, input: ResumeSection): Child[] {
         ),
       ];
   }
+}
+
+/** 앞머리를 굵게 두고 근거를 이어 붙인다. */
+function claim(d: Docx, input: Claim) {
+  return new d.Paragraph({
+    bullet: { level: 0 },
+    indent: { left: 360 },
+    spacing: { after: 100 },
+    children: [text(d, `${input.lead} `, { color: INK, bold: true }), text(d, input.body)],
+  });
 }
 
 function label(d: Docx, value: string) {

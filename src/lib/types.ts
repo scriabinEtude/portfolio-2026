@@ -56,6 +56,13 @@ export type ResumeRecord = {
   readonly projects?: readonly ResumeProject[];
 };
 
+/** 소개의 한 줄. 어떤 사람인지 먼저 말하고(lead) 근거를 붙인다(body). */
+export type Claim = {
+  readonly id: string;
+  readonly lead: string;
+  readonly body: string;
+};
+
 /** 학력·자격·병역처럼 한 줄로 끝나는 사실. */
 export type Fact = {
   readonly id: string;
@@ -72,6 +79,12 @@ export type ResumeSection =
       readonly id: string;
       readonly title: string;
       readonly paragraphs: readonly string[];
+    }
+  | {
+      readonly kind: "claims";
+      readonly id: string;
+      readonly title: string;
+      readonly claims: readonly Claim[];
     }
   | {
       readonly kind: "records";

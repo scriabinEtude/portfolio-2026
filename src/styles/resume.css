@@ -192,6 +192,19 @@
   -webkit-print-color-adjust: exact;
 }
 
+.points--claims > li {
+  font-size: var(--t-base);
+}
+
+.points--claims > li + li {
+  margin-top: var(--s-1);
+}
+
+.claim-lead {
+  font-weight: 600;
+  color: var(--fg);
+}
+
 .points-sub {
   margin-top: 7px;
   display: flex;

@@ -8,9 +8,37 @@ import type { Resume } from "../lib/types";
  */
 export const resume: Resume = {
   updated: "2026-08-22",
-  tagline: "개발팀이 쓰는 AI 인프라와 글로벌 호텔 예약 시스템을 만듭니다.",
+  tagline: "서로 다른 도메인에서 매번 시스템의 코어를 맡아, 필요한 것은 직접 만들어 왔습니다.",
 
   sections: [
+    {
+      kind: "claims",
+      id: "intro",
+      title: "소개",
+      claims: [
+        {
+          id: "core",
+          lead: "도메인이 바뀌어도 코어를 맡습니다.",
+          body: "금융 컴플라이언스 검색, 펫택시 매칭, 경매 정산, 호텔 요금 fanout, 개발팀 AI 인프라 — 매번 그 시스템에서 가장 어려운 지점이 제 몫이었습니다.",
+        },
+        {
+          id: "build",
+          lead: "필요하면 직접 만듭니다.",
+          body: "Lucene 기반 검색 엔진, 특허로 등록된 매칭 알고리즘, 코드베이스·로그·DB를 잇는 MCP 서버를 설계하고 구현했습니다.",
+        },
+        {
+          id: "define",
+          lead: "정의되지 않은 문제부터 시작합니다.",
+          body: "수기로 돌아가던 사업을 직접 겪어보며 기능을 정의했고, 목표 한 줄만 있던 자리에서 팀의 AI 인프라를 세우기 시작했습니다.",
+        },
+        {
+          id: "operate",
+          lead: "만든 뒤가 더 깁니다.",
+          body: "140여 대 IDC 서버 관제, 800만 건 배치의 유량 제어, 캐시·타임아웃 튜닝까지 운영을 책임졌습니다.",
+        },
+      ],
+    },
+
     {
       kind: "records",
       id: "career",
