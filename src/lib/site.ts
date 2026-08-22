@@ -3,7 +3,7 @@ export const site = {
   name: "임한결",
   role: "백엔드 개발자",
   roleEn: "Backend Engineer",
-  email: "scriabinetude@gmail.com",
+  email: "scriabinetude87@gmail.com",
   github: "https://github.com/scriabinEtude",
   githubHandle: "github.com/scriabinEtude",
 } as const;

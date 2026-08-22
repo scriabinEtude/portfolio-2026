@@ -1,24 +1,38 @@
+import { formatPeriod, joinValues, toBullet } from "../resume";
 import { site } from "../site";
-import type { Resume, ResumeRecord, ResumeSection } from "../types";
+import type {
+  BulletInput,
+  Fact,
+  Resume,
+  ResumeProject,
+  ResumeRecord,
+  ResumeSection,
+} from "../types";
 
 type Docx = typeof import("docx");
-type Child = InstanceType<Docx["Paragraph"]> | InstanceType<Docx["Table"]>;
+type Para = InstanceType<Docx["Paragraph"]>;
+type Child = Para | InstanceType<Docx["Table"]>;
 
-/* 화면과 같은 판형을 Word로 옮긴다. A4, 좌우 18mm 여백, 판면 174mm.
-   길이 단위는 twip(1440 twip = 1인치). */
+/* A4, 좌우 18mm 여백. 길이 단위는 twip(1440 twip = 1인치, 1mm ≈ 56.7 twip). */
 const PAGE_MARGIN = { top: 907, bottom: 907, left: 1021, right: 1021 };
-const RAIL_WIDTH = 1701; // 30mm
-const BODY_WIDTH = 8164; // 144mm
-const TABLE_WIDTH = RAIL_WIDTH + BODY_WIDTH;
+const CONTENT_WIDTH = 9865; // 174mm
+const LABEL_WIDTH = 1701; // 30mm
+const WHEN_WIDTH = 1701;
+const PROJECT_INDENT = 340; // 6mm
 
 /** Word 기본 한글 글꼴. 맥·윈도 양쪽에서 안전한 조합. */
 const FONT = { ascii: "Arial", eastAsia: "맑은 고딕", hAnsi: "Arial" };
 
-const INK = "17191C";
-const INK_2 = "4B5057";
-const INK_3 = "7C828A";
-const RULE = "D1CEC7";
-const MARK = "1F3FA8";
+const INK = "16181C";
+const INK_2 = "494F57";
+const INK_3 = "8A9099";
+const RULE = "DCDCE0";
+
+type RunOptions = {
+  size?: number;
+  color?: string;
+  bold?: boolean;
+};
 
 /** 이력서 구조를 그대로 Word 문서로 옮긴다. docx는 누를 때만 불러온다. */
 export async function buildResumeDocx(resume: Resume): Promise<Blob> {
@@ -39,7 +53,7 @@ export async function buildResumeDocx(resume: Resume): Promise<Blob> {
     sections: [
       {
         properties: { page: { margin: PAGE_MARGIN } },
-        children: [...masthead(d, resume), ...resume.sections.flatMap((s) => section(d, s))],
+        children: [...hero(d, resume), ...resume.sections.flatMap((s) => section(d, s))],
       },
     ],
   });
@@ -49,7 +63,7 @@ export async function buildResumeDocx(resume: Resume): Promise<Blob> {
 
 /* ── 조각들 ────────────────────────────────────────────── */
 
-function text(d: Docx, value: string, options: { size?: number; color?: string; bold?: boolean } = {}) {
+function text(d: Docx, value: string, options: RunOptions = {}) {
   return new d.TextRun({
     text: value,
     font: FONT,
@@ -59,35 +73,35 @@ function text(d: Docx, value: string, options: { size?: number; color?: string; 
   });
 }
 
-function masthead(d: Docx, resume: Resume): Child[] {
-  const contacts = [site.email, site.githubHandle].join("   ·   ");
-
+function hero(d: Docx, resume: Resume): Child[] {
   return [
     new d.Paragraph({
       spacing: { after: 40 },
       children: [text(d, site.name, { size: 44, color: INK, bold: true })],
     }),
     new d.Paragraph({
-      spacing: { after: 100 },
-      children: [text(d, `${site.role} · ${site.roleEn}`, { size: 21, color: INK_2 })],
+      spacing: { after: 120 },
+      children: [text(d, `${site.role} · ${site.roleEn}`, { size: 21, color: INK_3 })],
     }),
     new d.Paragraph({
-      spacing: { after: 100 },
-      children: [text(d, resume.tagline, { size: 19, color: INK_2 })],
+      spacing: { after: 120 },
+      children: [text(d, resume.tagline)],
     }),
     new d.Paragraph({
-      spacing: { after: 240 },
+      spacing: { after: 200 },
       border: { bottom: { style: d.BorderStyle.SINGLE, size: 6, color: RULE, space: 8 } },
-      children: [text(d, contacts, { size: 17, color: INK_3 })],
+      children: [
+        text(d, [site.email, site.githubHandle].join("   ·   "), { size: 17, color: INK_3 }),
+      ],
     }),
   ];
 }
 
-function heading(d: Docx, title: string) {
+function sectionTitle(d: Docx, title: string) {
   return new d.Paragraph({
-    spacing: { before: 320, after: 140 },
+    spacing: { before: 300, after: 140 },
     border: { bottom: { style: d.BorderStyle.SINGLE, size: 6, color: RULE, space: 6 } },
-    children: [text(d, title, { size: 24, color: INK, bold: true })],
+    children: [text(d, title, { size: 20, color: INK_3, bold: true })],
   });
 }
 
@@ -95,141 +109,186 @@ function section(d: Docx, input: ResumeSection): Child[] {
   switch (input.kind) {
     case "prose":
       return [
-        heading(d, input.title),
-        register(d, [
-          {
-            rail: [],
-            body: input.paragraphs.map((p) => new d.Paragraph({ children: [text(d, p)] })),
-          },
-        ]),
+        sectionTitle(d, input.title),
+        ...input.paragraphs.map((p) => new d.Paragraph({ children: [text(d, p)] })),
       ];
 
     case "records":
-      return [heading(d, input.title), register(d, input.records.map((r) => recordRow(d, r)))];
+      return [sectionTitle(d, input.title), ...input.records.flatMap((r) => job(d, r))];
 
-    case "matrix":
+    case "rows":
       return [
-        heading(d, input.title),
-        register(
+        sectionTitle(d, input.title),
+        grid(
           d,
-          input.rows.map((row) => ({
-            rail: [railText(d, row.key)],
-            body: [new d.Paragraph({ children: [text(d, row.values.join("  ·  "))] })],
-          })),
+          [LABEL_WIDTH, CONTENT_WIDTH - LABEL_WIDTH],
+          input.rows.map((row) => [
+            [label(d, row.key)],
+            [new d.Paragraph({ children: [text(d, joinValues(row.values))] })],
+          ]),
         ),
       ];
 
-    case "list":
+    case "facts":
       return [
-        heading(d, input.title),
-        register(d, [
-          {
-            rail: [],
-            body: input.items.map(
-              (item) => new d.Paragraph({ bullet: { level: 0 }, children: [text(d, item)] }),
-            ),
-          },
-        ]),
+        sectionTitle(d, input.title),
+        grid(
+          d,
+          [LABEL_WIDTH, CONTENT_WIDTH - LABEL_WIDTH - WHEN_WIDTH, WHEN_WIDTH],
+          input.facts.map((fact) => factRow(d, fact)),
+        ),
       ];
   }
 }
 
-function railText(d: Docx, value: string) {
+function label(d: Docx, value: string) {
   return new d.Paragraph({
-    alignment: d.AlignmentType.RIGHT,
-    spacing: { after: 0, line: 280 },
-    children: [text(d, value, { size: 17, color: INK_3 })],
+    spacing: { after: 0 },
+    children: [text(d, value, { size: 18, color: INK_3 })],
   });
 }
 
-function recordRow(d: Docx, record: ResumeRecord): RegisterRow {
-  const { from, to, note } = record.key;
-  const period = [from, to].filter(Boolean).join(" – ");
+function factRow(d: Docx, fact: Fact): Para[][] {
+  const value = fact.detail ? `${fact.title} ${fact.detail}` : fact.title;
+  return [
+    [label(d, fact.label ?? "")],
+    [new d.Paragraph({ spacing: { after: 0 }, children: [text(d, value)] })],
+    [
+      new d.Paragraph({
+        alignment: d.AlignmentType.RIGHT,
+        spacing: { after: 0 },
+        children: [text(d, fact.when ?? "", { size: 18, color: INK_3 })],
+      }),
+    ],
+  ];
+}
 
-  const rail = [period, note].filter((v): v is string => Boolean(v)).map((v) => railText(d, v));
+/* ── 경력 ──────────────────────────────────────────────── */
 
-  const body: InstanceType<Docx["Paragraph"]>[] = [
+function job(d: Docx, record: ResumeRecord): Para[] {
+  const paragraphs: Para[] = [
+    // 회사명은 왼쪽, 기간은 오른쪽 탭 정지점에 붙인다.
     new d.Paragraph({
-      spacing: { after: 20 },
-      children: [text(d, record.title, { size: 21, color: INK, bold: true })],
+      spacing: { before: 180, after: 0 },
+      tabStops: [{ type: d.TabStopType.RIGHT, position: CONTENT_WIDTH }],
+      children: [
+        text(d, record.title, { size: 24, color: INK, bold: true }),
+        new d.TextRun({
+          children: [new d.Tab(), formatPeriod(record.period)],
+          font: FONT,
+          size: 18,
+          color: INK_3,
+        }),
+      ],
     }),
   ];
 
   if (record.meta) {
-    body.push(
+    paragraphs.push(
       new d.Paragraph({
-        spacing: { after: 60 },
+        spacing: { after: 80 },
         children: [text(d, record.meta, { size: 18, color: INK_3 })],
       }),
     );
   }
 
   if (record.summary) {
-    body.push(new d.Paragraph({ children: [text(d, record.summary)] }));
+    paragraphs.push(new d.Paragraph({ children: [text(d, record.summary)] }));
   }
 
-  for (const bullet of record.bullets ?? []) {
-    body.push(new d.Paragraph({ bullet: { level: 0 }, children: [text(d, bullet)] }));
+  paragraphs.push(...bullets(d, record.bullets ?? [], 0));
+
+  for (const project of record.projects ?? []) {
+    paragraphs.push(...projectParagraphs(d, project));
   }
 
-  if (record.results?.length) {
-    body.push(
+  return paragraphs;
+}
+
+function projectParagraphs(d: Docx, project: ResumeProject): Para[] {
+  const indent = { left: PROJECT_INDENT };
+  const paragraphs: Para[] = [
+    new d.Paragraph({
+      indent,
+      spacing: { before: 200, after: 20 },
+      children: [text(d, project.title, { size: 20, color: INK, bold: true })],
+    }),
+  ];
+
+  if (project.summary) {
+    paragraphs.push(new d.Paragraph({ indent, children: [text(d, project.summary)] }));
+  }
+
+  if (project.achievements?.length) {
+    paragraphs.push(
       new d.Paragraph({
-        spacing: { before: 80, after: 20 },
-        children: [text(d, "결과", { size: 16, color: INK_3, bold: true })],
+        indent,
+        spacing: { before: 100, after: 20 },
+        children: [text(d, "주요 성과", { size: 16, color: INK_3, bold: true })],
       }),
     );
-    for (const result of record.results) {
-      body.push(
-        new d.Paragraph({ bullet: { level: 0 }, children: [text(d, result, { color: MARK })] }),
+    paragraphs.push(...bullets(d, project.achievements, PROJECT_INDENT));
+  }
+
+  return paragraphs;
+}
+
+/** 하위 항목은 한 단계 들여쓴 글머리로 옮긴다. */
+function bullets(d: Docx, items: readonly BulletInput[], offset: number): Para[] {
+  const paragraphs: Para[] = [];
+
+  for (const input of items) {
+    const bullet = toBullet(input);
+    paragraphs.push(
+      new d.Paragraph({
+        bullet: { level: 0 },
+        indent: { left: offset + 360 },
+        children: [text(d, bullet.text)],
+      }),
+    );
+    for (const item of bullet.items ?? []) {
+      paragraphs.push(
+        new d.Paragraph({
+          bullet: { level: 1 },
+          indent: { left: offset + 720 },
+          children: [text(d, item, { size: 18, color: INK_3 })],
+        }),
       );
     }
   }
 
-  if (record.stack?.length) {
-    body.push(
-      new d.Paragraph({
-        spacing: { before: 60 },
-        children: [text(d, record.stack.join("  ·  "), { size: 17, color: INK_3 })],
-      }),
-    );
-  }
-
-  return { rail, body };
+  return paragraphs;
 }
 
-/* ── 레일 격자 ─────────────────────────────────────────────
-   화면의 2열 레지스터를 Word에서는 테두리 없는 표로 재현한다. */
+/* ── 라벨 격자 ─────────────────────────────────────────────
+   화면의 라벨-값 격자를 Word에서는 테두리 없는 표로 재현한다. */
 
-type RegisterRow = {
-  readonly rail: readonly InstanceType<Docx["Paragraph"]>[];
-  readonly body: readonly InstanceType<Docx["Paragraph"]>[];
-};
-
-function register(d: Docx, rows: readonly RegisterRow[]) {
+function grid(d: Docx, widths: readonly number[], rows: readonly Para[][][]) {
   const none = { style: d.BorderStyle.NONE, size: 0, color: "auto" };
-  const blank = () => new d.Paragraph({ children: [] });
 
   return new d.Table({
-    width: { size: TABLE_WIDTH, type: d.WidthType.DXA },
-    columnWidths: [RAIL_WIDTH, BODY_WIDTH],
-    borders: { top: none, bottom: none, left: none, right: none, insideHorizontal: none, insideVertical: none },
+    width: { size: CONTENT_WIDTH, type: d.WidthType.DXA },
+    columnWidths: [...widths],
+    borders: {
+      top: none,
+      bottom: none,
+      left: none,
+      right: none,
+      insideHorizontal: none,
+      insideVertical: none,
+    },
     rows: rows.map(
-      (row) =>
+      (cells) =>
         new d.TableRow({
           cantSplit: true,
-          children: [
-            new d.TableCell({
-              width: { size: RAIL_WIDTH, type: d.WidthType.DXA },
-              margins: { top: 0, bottom: 220, left: 0, right: 340 },
-              children: row.rail.length > 0 ? [...row.rail] : [blank()],
-            }),
-            new d.TableCell({
-              width: { size: BODY_WIDTH, type: d.WidthType.DXA },
-              margins: { top: 0, bottom: 220, left: 0, right: 0 },
-              children: row.body.length > 0 ? [...row.body] : [blank()],
-            }),
-          ],
+          children: cells.map(
+            (children, index) =>
+              new d.TableCell({
+                width: { size: widths[index], type: d.WidthType.DXA },
+                margins: { top: 0, bottom: 120, left: 0, right: index === 0 ? 227 : 0 },
+                children: children.length > 0 ? [...children] : [new d.Paragraph({})],
+              }),
+          ),
         }),
     ),
   });

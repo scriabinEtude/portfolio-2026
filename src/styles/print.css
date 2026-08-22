@@ -1,6 +1,5 @@
 /* ── 인쇄 ──────────────────────────────────────────────────
-   화면의 판형을 A4로 그대로 옮긴다. 사이트 껍데기(메뉴·버튼·목차)만
-   걷어내고, 레일 격자와 괘선은 문서의 구조이므로 그대로 둔다. */
+   화면 구조를 그대로 A4로 옮긴다. 사이트 껍데기(상단 바·버튼·목차)만 걷어낸다. */
 
 @page {
   size: A4;
@@ -9,41 +8,41 @@
 
 @media print {
   :root {
-    --paper: #ffffff;
-    --rule: #d8d6d1;
-    --rule-2: #b9b6b0;
-    --ink: #000000;
-    --ink-2: #23262a;
-    --ink-3: #5c6167;
-    --mark: #1f3fa8;
+    --bg: #ffffff;
+    --fg: #000000;
+    --fg-2: #26292e;
+    --fg-3: #5f646b;
+    --line: #d9d9dd;
+    --line-2: #e8e8ec;
 
-    --rail: 30mm;
-    --gutter: 8mm;
-    --measure: 136mm;
+    --page: 100%;
+    --pad: 0px;
+    --label: 30mm;
 
-    --t--2: 7pt;
-    --t--1: 8pt;
-    --t-0: 9pt;
-    --t-1: 9.5pt;
-    --t-2: 10.5pt;
-    --t-3: 12pt;
-    --t-4: 14pt;
-    --t-5: 22pt;
+    --t-xs: 7.5pt;
+    --t-sm: 8.5pt;
+    --t-md: 9pt;
+    --t-base: 9.5pt;
+    --t-lg: 10.5pt;
+    --t-xl: 12pt;
+    --t-2xl: 13pt;
+    --t-3xl: 16pt;
+    --t-4xl: 22pt;
 
     --s-1: 1mm;
     --s-2: 1.5mm;
     --s-3: 2.5mm;
     --s-4: 3.5mm;
-    --s-5: 5mm;
-    --s-6: 7mm;
-    --s-7: 9mm;
-    --s-8: 12mm;
-    --s-9: 16mm;
+    --s-5: 4.5mm;
+    --s-6: 6mm;
+    --s-7: 7mm;
+    --s-8: 9mm;
+    --s-9: 11mm;
   }
 
   body {
     background: #fff;
-    font-size: var(--t-1);
+    font-size: var(--t-base);
     line-height: 1.55;
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
@@ -51,8 +50,6 @@
 
   .site-header,
   .site-footer,
-  .actions,
-  .actions-error,
   .toc,
   .back-link,
   .filter-bar,
@@ -61,61 +58,29 @@
     display: none !important;
   }
 
-  .main {
-    padding: 0;
-  }
-
-  .sheet {
+  .page {
     max-width: none;
-    width: 100%;
     padding: 0;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
   }
 
   .doc-grid {
     display: block;
   }
 
-  .masthead > * {
-    animation: none;
-  }
-
-  /* 절대배치 괘선은 두 번째 쪽으로 이어지지 않는다.
-     칸의 왼쪽 테두리로 바꾸고 줄 간격을 칸 안으로 옮겨 선이 끊기지 않게 한다. */
-  .register::before {
-    display: none;
-  }
-
-  .reg-cell {
-    border-left: 1px solid var(--rule);
-  }
-
-  .reg-line + .reg-line {
+  .hero {
     padding-top: 0;
   }
 
-  .reg-line + .reg-line > .reg-key,
-  .reg-line + .reg-line > .reg-cell {
-    padding-top: var(--s-6);
+  .section,
+  .job,
+  .project,
+  .article-head {
+    break-inside: avoid;
   }
 
-  .reg-line--heading + .reg-line > .reg-key,
-  .reg-line--heading + .reg-line > .reg-cell {
-    padding-top: var(--s-4);
-  }
-
-  .reg-line--heading {
-    break-after: avoid;
-    padding-bottom: 0;
-  }
-
-  .reg-line--heading > .reg-key,
-  .reg-line--heading > .reg-cell {
-    padding-bottom: var(--s-4);
-  }
-
+  .section-title,
+  .job-head,
+  .project-name,
   .prose > h2,
   .prose > h3 {
     break-after: avoid;
@@ -127,7 +92,7 @@
     break-inside: avoid;
   }
 
-  .contact-row a,
+  .hero-links a,
   .prose a {
     color: inherit;
     border-bottom: none;

@@ -1,0 +1,305 @@
+/* ── 문서 머리 ─────────────────────────────────────────── */
+
+.hero {
+  padding: var(--s-9) 0 var(--s-8);
+}
+
+.hero-name {
+  font-size: var(--t-4xl);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.16;
+}
+
+.hero-role {
+  margin-top: var(--s-1);
+  font-size: var(--t-base);
+  color: var(--fg-3);
+}
+
+.hero-lead {
+  margin-top: var(--s-5);
+  font-size: var(--t-lg);
+  color: var(--fg-2);
+  max-width: 32rem;
+}
+
+.hero-links {
+  margin-top: var(--s-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  font-size: var(--t-md);
+  color: var(--fg-3);
+}
+
+.hero-links a {
+  border-bottom: 1px solid var(--field);
+  padding-bottom: 1px;
+  transition:
+    color 0.15s var(--ease),
+    border-color 0.15s var(--ease);
+}
+
+.hero-links a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* 페이지 제목형 머리 — 포트폴리오 목록용 */
+.hero-title {
+  font-size: var(--t-3xl);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.25;
+}
+
+/* ── 섹션 ──────────────────────────────────────────────── */
+
+.section {
+  padding: var(--s-7) 0;
+  border-top: 1px solid var(--line);
+}
+
+.section-title {
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--fg-3);
+  letter-spacing: 0.02em;
+  margin-bottom: var(--s-5);
+}
+
+/* ── 경력 ──────────────────────────────────────────────── */
+
+.job + .job {
+  margin-top: var(--s-7);
+  padding-top: var(--s-7);
+  border-top: 1px solid var(--line-2);
+}
+
+.job-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.job-name {
+  font-size: var(--t-xl);
+  font-weight: 650;
+  letter-spacing: -0.028em;
+  line-height: 1.4;
+}
+
+.job-when {
+  font-size: var(--t-sm);
+  color: var(--fg-3);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.job-role {
+  margin-top: 2px;
+  font-size: var(--t-sm);
+  color: var(--fg-3);
+}
+
+.job-desc {
+  margin-top: var(--s-3);
+  color: var(--fg-2);
+}
+
+/* ── 회사 안의 개별 프로젝트 ─────────────────────────────── */
+
+.projects {
+  margin-top: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.project {
+  padding-left: var(--s-5);
+  border-left: 2px solid var(--line);
+  break-inside: avoid;
+}
+
+.project-name {
+  font-size: var(--t-base);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.5;
+}
+
+.project-desc {
+  margin-top: 6px;
+  color: var(--fg-2);
+  font-size: var(--t-md);
+}
+
+.points-label {
+  margin-top: var(--s-3);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--fg-3);
+}
+
+/* ── 항목 목록 ─────────────────────────────────────────── */
+
+.points {
+  margin-top: var(--s-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.points > li {
+  position: relative;
+  padding-left: 17px;
+  color: var(--fg-2);
+  font-size: var(--t-md);
+}
+
+.points > li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.76em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #c6cad1;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.points-sub {
+  margin-top: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.points-sub > li {
+  position: relative;
+  padding-left: 15px;
+  color: var(--fg-3);
+  font-size: var(--t-sm);
+}
+
+.points-sub > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.85em;
+  width: 7px;
+  height: 1px;
+  background: #d5d8dd;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+/* ── 기술 · 학력/자격/병역: 같은 라벨 격자를 쓴다 ────────── */
+
+.rows {
+  display: grid;
+  grid-template-columns: var(--label) minmax(0, 1fr);
+  column-gap: var(--s-6);
+  row-gap: var(--s-3);
+  align-items: baseline;
+}
+
+.rows dt {
+  font-size: var(--t-sm);
+  color: var(--fg-3);
+}
+
+.rows dd {
+  color: var(--fg-2);
+  font-size: var(--t-md);
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: var(--label) minmax(0, 1fr) max-content;
+  column-gap: var(--s-6);
+  row-gap: var(--s-2);
+  align-items: baseline;
+}
+
+.fact-key {
+  font-size: var(--t-sm);
+  color: var(--fg-3);
+}
+
+.fact-value {
+  color: var(--fg-2);
+  font-size: var(--t-md);
+}
+
+.fact-value strong {
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.fact-when {
+  font-size: var(--t-sm);
+  color: var(--fg-3);
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── 산문형 섹션 ───────────────────────────────────────── */
+
+.prose-block {
+  color: var(--fg-2);
+  max-width: 32rem;
+}
+
+.prose-block p + p {
+  margin-top: var(--s-3);
+}
+
+/* 개발 중에만 보이는 안내 */
+.dev-note {
+  margin-top: var(--s-6);
+  padding: var(--s-3) var(--s-4);
+  font-size: var(--t-sm);
+  color: var(--fg-3);
+  background: var(--hover);
+  border-radius: var(--r-sm);
+}
+
+.dev-note code {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  color: var(--fg-2);
+}
+
+@media (max-width: 34rem) {
+  .rows,
+  .facts {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 4px;
+  }
+
+  .rows dt,
+  .fact-key {
+    margin-top: var(--s-3);
+  }
+
+  .fact-when {
+    text-align: left;
+  }
+
+  /* 앞 항목과 같은 라벨은 비워두는데, 한 열로 접히면 빈 줄이 되므로 지운다 */
+  .fact-key:empty {
+    display: none;
+  }
+
+  .job-head {
+    flex-direction: column;
+    gap: 2px;
+  }
+}

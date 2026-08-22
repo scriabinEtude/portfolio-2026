@@ -5,144 +5,95 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--s-2);
+  padding-bottom: var(--s-5);
 }
 
 .filter-bar button {
-  font-family: var(--font-mono);
-  font-size: var(--t--2);
+  font-size: var(--t-xs);
+  font-weight: 500;
   line-height: 1;
-  padding: 6px 9px;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  color: var(--ink-3);
+  padding: 8px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--fg-3);
   transition:
-    color 0.18s var(--ease),
-    border-color 0.18s var(--ease),
-    background-color 0.18s var(--ease);
+    background-color 0.15s var(--ease),
+    border-color 0.15s var(--ease),
+    color 0.15s var(--ease);
 }
 
 .filter-bar button:hover {
-  color: var(--ink);
-  border-color: var(--rule-2);
+  background: var(--hover);
+  color: var(--fg);
 }
 
 .filter-bar button[aria-pressed="true"] {
-  color: var(--mark-deep);
-  border-color: var(--mark);
-  background: var(--mark-wash);
+  background: var(--fg);
+  border-color: var(--fg);
+  color: #fff;
 }
 
 .filter-count {
   margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: var(--t--2);
-  color: var(--ink-3);
+  font-size: var(--t-xs);
+  color: var(--fg-3);
 }
 
-.post-row {
-  position: relative;
+.post-list {
+  display: flex;
+  flex-direction: column;
 }
 
-.post-row + .post-row {
-  padding-top: var(--s-7);
+.post + .post {
+  border-top: 1px solid var(--line-2);
 }
 
-/* 레일 위에 찍히는 표식 — 마우스를 올린 줄이 어디인지 알려준다.
-   줄 간격은 격자(.reg-line)의 padding이라 칸을 기준으로 잡아야 제목과 눈높이가 맞는다. */
-.post-row .reg-cell {
-  position: relative;
-}
-
-.post-row .reg-cell::before {
-  content: "";
-  position: absolute;
-  left: -2px;
-  top: 0.6rem;
-  width: 5px;
-  height: 5px;
-  background: var(--mark);
-  transform: scale(0);
-  transition: transform 0.2s var(--ease);
-  print-color-adjust: exact;
-  -webkit-print-color-adjust: exact;
-}
-
-.post-row:hover .reg-cell::before,
-.post-row:focus-within .reg-cell::before {
-  transform: scale(1);
-}
-
-.post-key-cat {
+.post-link {
   display: block;
-  margin-top: 2px;
-  font-size: var(--t--2);
-  color: var(--ink-3);
+  padding: var(--s-6) 0;
+}
+
+.post:first-child .post-link {
+  padding-top: var(--s-2);
+}
+
+.post-meta {
+  font-size: var(--t-xs);
+  color: var(--fg-3);
+  font-variant-numeric: tabular-nums;
 }
 
 .post-title {
-  font-size: var(--t-3);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  line-height: 1.35;
+  margin-top: 5px;
+  font-size: var(--t-2xl);
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.36;
+  transition: color 0.15s var(--ease);
 }
 
-.post-title a {
-  transition: color 0.18s var(--ease);
-}
-
-/* 줄 전체를 눌러도 글이 열린다 */
-.post-title a::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
-.post-row:hover .post-title a,
-.post-title a:focus-visible {
-  color: var(--mark);
+.post-link:hover .post-title,
+.post-link:focus-visible .post-title {
+  color: var(--accent);
 }
 
 .post-summary {
   margin-top: var(--s-2);
-  color: var(--ink-2);
-  max-width: var(--measure);
+  color: var(--fg-2);
+  font-size: var(--t-md);
 }
 
-.post-foot {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--s-4);
+.post-tags {
   margin-top: var(--s-3);
-}
-
-.post-foot .chips {
-  margin-top: 0;
-}
-
-.post-read {
-  font-family: var(--font-mono);
-  font-size: var(--t--2);
-  color: var(--ink-3);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  font-size: var(--t-xs);
+  color: var(--fg-3);
 }
 
 .empty-note {
-  padding-top: var(--s-5);
-  color: var(--ink-3);
-}
-
-@media (max-width: 44rem) {
-  .post-row .reg-cell::before {
-    display: none;
-  }
-
-  .post-row .reg-key {
-    display: flex;
-    align-items: baseline;
-    gap: var(--s-3);
-  }
-
-  .post-key-cat {
-    margin-top: 0;
-  }
+  padding: var(--s-5) 0;
+  color: var(--fg-3);
+  font-size: var(--t-md);
 }

@@ -1,54 +1,51 @@
-/* 디자인 토큰. 색·타입·간격·판형은 전부 여기서만 정의한다. */
+/* 디자인 토큰. 색·타입·간격은 전부 여기서만 정의한다. */
 :root {
   color-scheme: light;
 
-  /* 지면과 종이 — 문서 한 장이 책상 위에 놓인 상태 */
-  --paper: #f0efec;
-  --sheet: #ffffff;
-  --ink: #17191c;
-  --ink-2: #4b5057;
-  --ink-3: #7c828a;
-  --rule: #e6e4df;
-  --rule-2: #d1cec7;
+  --bg: #ffffff;
+  --fg: #16181c;
+  --fg-2: #494f57;
+  --fg-3: #8a9099;
 
-  /* 강조는 잉크 블루 하나뿐 */
-  --mark: #1f3fa8;
-  --mark-deep: #16307f;
-  --mark-wash: #eef1fb;
+  --line: #ededf0;
+  --line-2: #f3f3f5;
+  --hover: #f7f7f9;
+  --field: #e4e5e9;
+
+  --accent: #2f5bea;
+  --accent-deep: #2148c9;
+  --danger: #b3261e;
 
   --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     system-ui, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  /* 라틴·숫자는 모노, 한글은 없으므로 Pretendard로 떨어진다 */
-  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, "Pretendard Variable",
-    Pretendard, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
 
-  --t--2: 0.6875rem;
-  --t--1: 0.8125rem;
-  --t-0: 0.9375rem;
-  --t-1: 1rem;
-  --t-2: 1.0625rem;
-  --t-3: 1.3125rem;
-  --t-4: 1.625rem;
-  --t-5: clamp(2rem, 1.35rem + 2.7vw, 3rem);
+  --t-xs: 0.8125rem; /* 13 — 섹션 라벨, 보조 표기 */
+  --t-sm: 0.90625rem; /* 14.5 — 메타, 하위 항목 */
+  --t-md: 0.96875rem; /* 15.5 — 목록, 설명 */
+  --t-base: 1rem; /* 16 — 본문 */
+  --t-lg: 1.0625rem; /* 17 — 리드 */
+  --t-xl: 1.1875rem; /* 19 — 회사명 */
+  --t-2xl: 1.375rem; /* 22 — 글 목록 제목 */
+  --t-3xl: clamp(1.75rem, 1.4rem + 1.4vw, 2rem); /* 28–32 — 글 제목 */
+  --t-4xl: clamp(2rem, 1.55rem + 1.8vw, 2.375rem); /* 32–38 — 이름 */
 
-  --s-1: 0.25rem;
-  --s-2: 0.5rem;
-  --s-3: 0.75rem;
-  --s-4: 1rem;
-  --s-5: 1.5rem;
-  --s-6: 2rem;
-  --s-7: 2.75rem;
-  --s-8: 4rem;
-  --s-9: 6rem;
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-7: 32px;
+  --s-8: 40px;
+  --s-9: 56px;
 
-  /* 판형 — A4(210mm) 18mm 여백 기준 판면 174mm ≈ 658px ≈ 41rem */
-  --rail: 7rem; /* mono 키 레일 */
-  --gutter: 2rem; /* 레일과 본문 사이 */
-  --measure: 32rem; /* 본문 한 줄 길이 */
-  --sheet-w: calc(var(--rail) + var(--gutter) + var(--measure)); /* 판면 */
-  --sheet-pad: clamp(1.25rem, 0.5rem + 3.4vw, 3.25rem); /* 판면 바깥 여백 */
-  --sheet-outer: calc(var(--sheet-w) + var(--sheet-pad) * 2);
+  --page: 42rem; /* 본문 단 폭 (좌우 여백 포함) */
+  --pad: 28px; /* 단 좌우 여백 */
+  --label: 8.5rem; /* 기술·학력 라벨 열 */
+
+  --r-sm: 8px;
+  --r-md: 10px;
 
   --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
-  --radius: 2px;
 }

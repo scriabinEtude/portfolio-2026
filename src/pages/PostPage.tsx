@@ -19,25 +19,22 @@ function PostPage() {
     <div className="doc-grid">
       <Toc headings={headings} />
 
-      <article className="sheet">
-        <Link className="back-link" to="/portfolio">
-          ← 포트폴리오
-        </Link>
+      <article className="page">
+        <header className="article-head">
+          <Link className="back-link" to="/portfolio">
+            ← 포트폴리오
+          </Link>
 
-        <header className="masthead">
-          <div className="masthead-top">
-            <span className="eyebrow">{post.category}</span>
-            <span className="mono">
-              <time dateTime={post.date}>{formatDate(post.date)}</time> · {readingMinutes(post.body)}
-              분
-            </span>
-          </div>
+          <p className="article-meta">
+            <time dateTime={post.date}>{formatDate(post.date)}</time> · {post.category} ·{" "}
+            {readingMinutes(post.body)}분
+          </p>
 
           <h1 className="article-title">{post.title}</h1>
-          <p className="masthead-lead">{post.summary}</p>
+          <p className="article-lead">{post.summary}</p>
 
           {post.tags.length > 0 && (
-            <ul className="chips chips--plain" aria-label="기술 태그">
+            <ul className="article-tags" aria-label="기술 태그">
               {post.tags.map((tag) => (
                 <li key={tag}>#{tag}</li>
               ))}

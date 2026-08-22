@@ -1,38 +1,30 @@
 import { Link } from "react-router-dom";
-import { formatMonth, readingMinutes } from "../lib/content";
+import { formatDate, readingMinutes } from "../lib/content";
 import type { Post } from "../lib/types";
-import { RegisterLine } from "./Register";
 
 type PostRowProps = {
   readonly post: Post;
 };
 
 function PostRow({ post }: PostRowProps) {
-  const rail = (
-    <>
-      <span className="rail-line">{formatMonth(post.date)}</span>
-      <span className="post-key-cat">{post.category}</span>
-    </>
-  );
-
   return (
-    <RegisterLine as="article" className="post-row" rail={rail}>
-      <h3 className="post-title">
-        <Link to={`/portfolio/${post.slug}`}>{post.title}</Link>
-      </h3>
-      <p className="post-summary">{post.summary}</p>
-
-      <div className="post-foot">
+    <li className="post">
+      <Link className="post-link" to={`/portfolio/${post.slug}`}>
+        <p className="post-meta">
+          <time dateTime={post.date}>{formatDate(post.date)}</time> · {post.category} ·{" "}
+          {readingMinutes(post.body)}분
+        </p>
+        <h3 className="post-title">{post.title}</h3>
+        <p className="post-summary">{post.summary}</p>
         {post.tags.length > 0 && (
-          <ul className="chips chips--plain" aria-label="기술 태그">
+          <ul className="post-tags" aria-label="기술 태그">
             {post.tags.map((tag) => (
               <li key={tag}>#{tag}</li>
             ))}
           </ul>
         )}
-        <span className="post-read">{readingMinutes(post.body)}분</span>
-      </div>
-    </RegisterLine>
+      </Link>
+    </li>
   );
 }
 
