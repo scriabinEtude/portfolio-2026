@@ -3,24 +3,17 @@ import type { Resume } from "../lib/types";
 /**
  * 이력서 내용. 이 파일만 고치면 화면·인쇄본·DOCX가 함께 바뀐다.
  * 이름·직함·연락처는 src/lib/site.ts에 있다.
- *
- * 소개(자기소개)를 넣고 싶으면 sections 맨 앞에 아래를 붙이면 된다.
- *   { kind: "prose", id: "intro", title: "소개", paragraphs: ["...", "..."] },
  */
 export const resume: Resume = {
   updated: "2026-08-22",
   sections: [
     {
-      kind: "claims",
+      kind: "prose",
       id: "intro",
       title: "소개",
-      claims: [
-        
-        {
-          id: "operate",
-          lead: "",
-          body: "",
-        },
+      paragraphs: [
+        "20여 개 글로벌 공급사를 연동하는 호텔 예약 시스템에서 응답 속도와 대용량 배치를 개선했습니다. 800만 건 규모의 콘텐츠 동기화 배치를 유량 제어로 3주에서 1주로 줄이고, 140여 대 IDC 서버의 실시간 관제 체계를 구축했습니다.",
+        "AX 팀에서 AI를 실무에 쓸 수 있는 기반을 만들고 있습니다. 코드베이스 검색과 로그·DB 조회 MCP를 개발하고, OIDC 기반 인증 게이트로 접근 자격증명과 감사 기록을 관리하며, 이를 로컬 개발 도구와 Slack·Jira 챗봇 등 여러 채널로 전사에 제공합니다.",
       ],
     },
 
