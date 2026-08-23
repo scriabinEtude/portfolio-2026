@@ -73,8 +73,8 @@
   }
 
   .hero-photo {
-    width: 30mm; /* 증명사진 3×4cm */
-    border-radius: 2px;
+    width: 28mm;
+    height: 28mm;
   }
 
   /* 한 쪽보다 길어질 수 있는 덩어리(.section, .job)에는 break-inside를 걸지 않는다.
@@ -105,8 +105,14 @@
 
   .prose pre,
   .prose blockquote,
-  .prose table {
+  .prose table,
+  .prose figure {
     break-inside: avoid;
+  }
+
+  /* 종이에서는 눌러서 갈 수 없다. 포트폴리오 주소는 머리말에 이미 있다. */
+  .point-link {
+    display: none;
   }
 
   .hero-links a,

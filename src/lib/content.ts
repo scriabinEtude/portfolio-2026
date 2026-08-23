@@ -1,4 +1,5 @@
 import { parseFrontmatter, readDate, readString, readStringArray } from "./frontmatter";
+import { assertImages } from "./images";
 import type { Post, PostMeta } from "./types";
 
 type RawFiles = Record<string, string>;
@@ -13,9 +14,26 @@ function slugOf(path: string): string {
   return path.split("/").pop()!.replace(/\.md$/, "");
 }
 
+// 코드블럭 안의 주석은 예제일 수 있으니 남기고, 본문의 <!-- --> 만 걷어낸다.
+const FENCE_OR_COMMENT = /(```[\s\S]*?```)|<!--[\s\S]*?-->/g;
+
+/**
+ * 화면에 내보내지 않을 메모를 지운다.
+ * 초고를 쓰는 동안 "여기 그래프" 같은 표시를 파일에 남겨 두기 위한 것으로,
+ * react-markdown은 HTML 주석을 글자 그대로 찍기 때문에 미리 잘라 낸다.
+ */
+function stripComments(body: string): string {
+  return body
+    .replace(FENCE_OR_COMMENT, (_match, fence: string | undefined) => fence ?? "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 function toPost(path: string, raw: string): Post {
   const source = `content/posts/${slugOf(path)}.md`;
-  const { data, body } = parseFrontmatter(raw, source);
+  const { data, body: rawBody } = parseFrontmatter(raw, source);
+  const body = stripComments(rawBody);
+  assertImages(body, source);
   return {
     slug: slugOf(path),
     title: readString(data, "title", source),

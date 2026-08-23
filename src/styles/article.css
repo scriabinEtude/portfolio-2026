@@ -200,8 +200,23 @@
   border-bottom-color: var(--line);
 }
 
+.prose figure {
+  margin: var(--s-6) 0;
+}
+
 .prose img {
+  display: block;
+  width: 100%;
+  height: auto;
   border-radius: var(--r-md);
+  border: 1px solid var(--line-2);
+}
+
+.prose figcaption {
+  margin-top: var(--s-3);
+  font-size: var(--t-xs);
+  color: var(--fg-2);
+  line-height: 1.5;
 }
 
 .prose > :first-child {
