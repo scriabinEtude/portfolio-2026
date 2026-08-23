@@ -33,12 +33,6 @@ function ResumePage() {
         />
       </header>
 
-      {import.meta.env.DEV && (
-        <p className="dev-note">
-          내용은 <code>src/content/resume.ts</code>에서 고칩니다. 이 안내는 개발 중에만 보입니다.
-        </p>
-      )}
-
       <ResumeSections sections={resume.sections} asOf={resume.updated} />
     </div>
   );
