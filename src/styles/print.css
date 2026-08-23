@@ -110,9 +110,11 @@
     break-inside: avoid;
   }
 
-  /* 종이에서는 눌러서 갈 수 없다. 포트폴리오 주소는 머리말에 이미 있다. */
+  /* PDF는 종이보다 화면에서 더 많이 읽힌다. 눌러서 갈 수 있는 링크는 링크로 둔다. */
   .point-link {
-    display: none;
+    color: var(--accent);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 
   .hero-links a,

@@ -1,6 +1,6 @@
 import profileUrl from "../../assets/profile-round.png";
 import { formatMonths, formatPeriod, joinValues, toBullet, totalMonths } from "../resume";
-import { site } from "../site";
+import { absoluteUrl, site } from "../site";
 import type {
   BulletInput,
   Claim,
@@ -31,11 +31,13 @@ const FONT = { ascii: "Arial", eastAsia: "맑은 고딕", hAnsi: "Arial" };
 const INK = "14161A";
 const INK_2 = "24272C";
 const RULE = "DCDCE0";
+const LINK = "2F5BEA";
 
 type RunOptions = {
   size?: number;
   color?: string;
   bold?: boolean;
+  underline?: boolean;
 };
 
 /** 이력서 구조를 그대로 Word 문서로 옮긴다. docx는 누를 때만 불러온다. */
@@ -90,21 +92,29 @@ function text(d: Docx, value: string, options: RunOptions = {}) {
     size: options.size ?? 19,
     color: options.color ?? INK_2,
     bold: options.bold ?? false,
+    underline: options.underline === true ? {} : undefined,
   });
 }
 
-function contactLine(d: Docx, label: string, value: string) {
+/**
+ * 눌러서 갈 수 있는 링크.
+ * 이 문서는 사이트 밖에서 열리므로 경로가 아니라 절대 주소여야 한다.
+ */
+function hyperlink(d: Docx, label: string, url: string, size = 19) {
+  return new d.ExternalHyperlink({
+    children: [text(d, label, { size, color: LINK, underline: true })],
+    link: url,
+  });
+}
+
+function contactLine(d: Docx, label: string, value: string, url?: string) {
   return new d.Paragraph({
     tabStops: [{ type: d.TabStopType.LEFT, position: LABEL_WIDTH }],
     spacing: { after: 40 },
     children: [
       text(d, label, { size: 18, color: INK, bold: true }),
-      new d.TextRun({
-        children: [new d.Tab(), value],
-        font: FONT,
-        size: 19,
-        color: INK_2,
-      }),
+      new d.TextRun({ children: [new d.Tab()], font: FONT, size: 19, color: INK_2 }),
+      url === undefined ? text(d, value) : hyperlink(d, value, url),
     ],
   });
 }
@@ -119,8 +129,8 @@ function hero(d: Docx, photo: ArrayBuffer | null): Child[] {
       spacing: { after: 200 },
       children: [text(d, site.role, { size: 24, color: INK_2 })],
     }),
-    contactLine(d, "이메일", site.email),
-    contactLine(d, "포트폴리오", site.portfolioUrl),
+    contactLine(d, "이메일", site.email, `mailto:${site.email}`),
+    contactLine(d, "포트폴리오", site.portfolioUrl, absoluteUrl(site.portfolioPath)),
   ];
 
   // 문단 하나에 아래 테두리만 줘서 가로 괘선으로 쓴다
@@ -317,7 +327,12 @@ function bullets(d: Docx, items: readonly BulletInput[], offset: number): Para[]
       new d.Paragraph({
         bullet: { level: 0 },
         indent: { left: offset + 360 },
-        children: [text(d, bullet.text)],
+        children: [
+          text(d, bullet.text),
+          ...(bullet.href
+            ? [text(d, "  "), hyperlink(d, "글 보기", absoluteUrl(bullet.href), 18)]
+            : []),
+        ],
       }),
     );
     for (const item of bullet.items ?? []) {
