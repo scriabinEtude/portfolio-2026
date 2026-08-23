@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 300" width="640" height="300" role="img">
+  <title>해외 고객 문의 시간과 한국 상담 시간의 차이</title>
+  <desc>해외 고객 문의는 한국 상담 시간 밖에도 계속 들어오며 이 구간의 문의는 다음 상담 시간까지 대기한다.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; fill: #16181c; }
+    .h { font-size: 15px; font-weight: 600; }
+    .t { font-size: 12px; fill: #555b66; }
+    .l { font-size: 13px; font-weight: 600; }
+  </style>
+  <rect width="640" height="300" fill="#fff"/>
+  <text class="h" x="28" y="35">상담 시간 밖에 들어온 문의는 다음 업무 시간까지 대기했다</text>
+  <text class="t" x="612" y="35" text-anchor="end">시간대 관계 개념도</text>
+
+  <text class="l" x="28" y="93">해외 고객 문의</text>
+  <rect x="154" y="72" width="458" height="36" rx="8" fill="#eef2fd"/>
+  <circle cx="190" cy="90" r="5" fill="#2f5bea"/><circle cx="252" cy="90" r="5" fill="#2f5bea"/>
+  <circle cx="330" cy="90" r="5" fill="#2f5bea"/><circle cx="408" cy="90" r="5" fill="#2f5bea"/>
+  <circle cx="486" cy="90" r="5" fill="#2f5bea"/><circle cx="566" cy="90" r="5" fill="#2f5bea"/>
+
+  <text class="l" x="28" y="158">한국 상담 시간</text>
+  <rect x="154" y="138" width="458" height="36" rx="8" fill="#f2f2f4"/>
+  <rect x="292" y="138" width="202" height="36" rx="8" fill="#dfe7fc"/>
+  <text class="t" x="393" y="161" text-anchor="middle">상담 가능</text>
+
+  <path d="M154 198 H292" stroke="#c7473a" stroke-width="3"/>
+  <path d="M494 198 H612" stroke="#c7473a" stroke-width="3"/>
+  <text class="t" x="223" y="222" text-anchor="middle" fill="#9f3329">대기 구간</text>
+  <text class="t" x="553" y="222" text-anchor="middle" fill="#9f3329">대기 구간</text>
+
+  <rect x="154" y="248" width="458" height="30" rx="8" fill="#f7f7f9"/>
+  <text class="t" x="383" y="268" text-anchor="middle">추가 확인이 한 번 필요하면 응답 주기가 하루씩 늘어날 수 있음</text>
+</svg>

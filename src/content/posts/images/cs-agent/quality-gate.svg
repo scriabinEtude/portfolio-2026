@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 350" width="640" height="350" role="img">
+  <title>답변 평가 결과에 따른 발송과 상담원 이관</title>
+  <desc>생성 답변을 설정된 평가 항목으로 채점하고 기준 이상이면 고객에게 발송하며 기준 미달이면 기존 자동 응답 후 상담원에게 이관한다.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; fill: #16181c; }
+    .h { font-size: 14px; font-weight: 600; }
+    .t { font-size: 12px; fill: #555b66; }
+    .k { font-size: 12px; font-weight: 600; fill: #2f5bea; }
+  </style>
+  <defs><marker id="a" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#aeb3bb" stroke-width="1.3"/></marker></defs>
+  <rect width="640" height="350" fill="#fff"/>
+
+  <rect x="28" y="128" width="148" height="72" rx="10" fill="#f7f7f9" stroke="#e4e5e9"/>
+  <text class="h" x="102" y="157" text-anchor="middle">생성 답변</text>
+  <text class="t" x="102" y="180" text-anchor="middle">검색·조회 근거 포함</text>
+  <line x1="176" y1="164" x2="224" y2="164" stroke="#aeb3bb" marker-end="url(#a)"/>
+
+  <rect x="228" y="96" width="184" height="136" rx="12" fill="#f5f7fe" stroke="#2f5bea"/>
+  <text class="k" x="320" y="126" text-anchor="middle">QUALITY GATE</text>
+  <text class="h" x="320" y="154" text-anchor="middle">답변 평가</text>
+  <text class="t" x="320" y="179" text-anchor="middle">설정된 항목별 점수 계산</text>
+  <line x1="260" y1="195" x2="380" y2="195" stroke="#d4dcf7"/>
+  <text class="t" x="320" y="216" text-anchor="middle">발송 기준과 비교</text>
+
+  <path d="M412 142 H464 V80 H492" fill="none" stroke="#287a55" stroke-width="1.5" marker-end="url(#a)"/>
+  <text class="k" x="442" y="130" fill="#226747">기준 이상</text>
+  <rect x="496" y="48" width="116" height="64" rx="10" fill="#f4faf7" stroke="#cfe5da"/>
+  <text class="h" x="554" y="75" text-anchor="middle" fill="#226747">고객 발송</text>
+  <text class="t" x="554" y="96" text-anchor="middle">자동 응답 완료</text>
+
+  <path d="M412 190 H464 V258 H492" fill="none" stroke="#c7473a" stroke-width="1.5" marker-end="url(#a)"/>
+  <text class="k" x="442" y="212" fill="#9f3329">기준 미달</text>
+  <rect x="496" y="222" width="116" height="78" rx="10" fill="#fff7f5" stroke="#eccbc6"/>
+  <text class="h" x="554" y="249" text-anchor="middle" fill="#9f3329">기존 안내</text>
+  <text class="t" x="554" y="270" text-anchor="middle">운영 시간 전달</text>
+  <text class="t" x="554" y="287" text-anchor="middle">상담원 이관</text>
+</svg>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" width="640" height="320" role="img">
+  <title>CS 챗봇의 두 가지 설계 기준</title>
+  <desc>다른 테넌트 정보의 혼입은 검색 범위 제한으로, 근거가 부족한 답변의 자동 발송은 품질 평가로 제어한다.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; fill: #16181c; }
+    .h { font-size: 14px; font-weight: 600; }
+    .t { font-size: 12px; fill: #555b66; }
+    .k { font-size: 12px; font-weight: 600; fill: #2f5bea; }
+  </style>
+  <defs><marker id="a" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#aeb3bb" stroke-width="1.3"/></marker></defs>
+  <rect width="640" height="320" fill="#fff"/>
+  <text class="h" x="28" y="35">위험 요소마다 차단 지점을 따로 두었다</text>
+
+  <rect x="28" y="70" width="246" height="92" rx="10" fill="#fff7f5" stroke="#eccbc6"/>
+  <text class="k" x="48" y="95" fill="#9f3329">위험 1</text>
+  <text class="h" x="48" y="120">다른 병원 자료가 검색됨</text>
+  <text class="t" x="48" y="143">잘못된 답변 · 테넌트 정보 노출</text>
+
+  <line x1="274" y1="116" x2="356" y2="116" stroke="#aeb3bb" marker-end="url(#a)"/>
+
+  <rect x="360" y="70" width="252" height="92" rx="10" fill="#f5f7fe" stroke="#dce3fa"/>
+  <text class="k" x="380" y="95">검색 전 제어</text>
+  <text class="h" x="380" y="120">테넌트 스코프 필터</text>
+  <text class="t" x="380" y="143">조회할 수 있는 문서 범위 제한</text>
+
+  <rect x="28" y="196" width="246" height="92" rx="10" fill="#fff7f5" stroke="#eccbc6"/>
+  <text class="k" x="48" y="221" fill="#9f3329">위험 2</text>
+  <text class="h" x="48" y="246">근거가 부족한 답변이 발송됨</text>
+  <text class="t" x="48" y="269">가격 · 절차 안내 오류</text>
+
+  <line x1="274" y1="242" x2="356" y2="242" stroke="#aeb3bb" marker-end="url(#a)"/>
+
+  <rect x="360" y="196" width="252" height="92" rx="10" fill="#f5f7fe" stroke="#dce3fa"/>
+  <text class="k" x="380" y="221">발송 전 제어</text>
+  <text class="h" x="380" y="246">답변 품질 평가</text>
+  <text class="t" x="380" y="269">기준 미달 시 기존 상담 절차로 이관</text>
+</svg>

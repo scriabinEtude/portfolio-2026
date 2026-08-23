@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 236" width="640" height="236" role="img">
+  <title>배치 실행 안전성을 위한 세 가지 처리 지점</title>
+  <desc>중복 실행을 막고 체크포인트에서 작업을 이어가며 일시 실패를 재시도하는 실행 흐름이다.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; fill: #16181c; }
+    .h { font-size: 14px; font-weight: 600; }
+    .t { font-size: 12px; fill: #555b66; }
+    .k { font-size: 12px; font-weight: 600; fill: #2f5bea; }
+  </style>
+  <defs><marker id="a" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#aeb3bb" stroke-width="1.3"/></marker></defs>
+  <rect width="640" height="236" fill="#fff"/>
+
+  <rect x="24" y="58" width="166" height="92" rx="10" fill="#f7f7f9" stroke="#e4e5e9"/>
+  <text class="k" x="44" y="82">01 · 시작</text>
+  <text class="h" x="44" y="106">동시 시작 방지</text>
+  <text class="t" x="44" y="128">같은 배치의 중복 실행 차단</text>
+
+  <line x1="190" y1="104" x2="226" y2="104" stroke="#aeb3bb" marker-end="url(#a)"/>
+
+  <rect x="230" y="58" width="180" height="92" rx="10" fill="#f5f7fe" stroke="#dce3fa"/>
+  <text class="k" x="250" y="82">02 · 처리</text>
+  <text class="h" x="250" y="106">체크포인트 저장</text>
+  <text class="t" x="250" y="128">완료 위치를 기록해 재개</text>
+
+  <line x1="410" y1="104" x2="446" y2="104" stroke="#aeb3bb" marker-end="url(#a)"/>
+
+  <rect x="450" y="58" width="166" height="92" rx="10" fill="#f7f7f9" stroke="#e4e5e9"/>
+  <text class="k" x="470" y="82">03 · 실패</text>
+  <text class="h" x="470" y="106">재시도</text>
+  <text class="t" x="470" y="128">일시 실패한 호출 다시 처리</text>
+
+  <path d="M533 150 V196 Q533 216 513 216 H320 Q300 216 300 196 V158" fill="none" stroke="#c7473a" stroke-width="1.5" marker-end="url(#a)"/>
+  <text class="t" x="424" y="207" text-anchor="middle" fill="#9f3329">재시도 후 체크포인트부터 계속</text>
+
+</svg>

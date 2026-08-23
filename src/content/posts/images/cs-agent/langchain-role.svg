@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 340" width="640" height="340" role="img">
+  <title>프로젝트 설계와 LangChain 사용 범위</title>
+  <desc>테넌트 스코프와 발송 기준은 프로젝트 정책으로 두고 LangChain은 모델 호출 추상화, 처리 단계 연결, 실행 로그 확인에 사용한다.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; fill: #16181c; }
+    .h { font-size: 14px; font-weight: 600; }
+    .t { font-size: 12px; fill: #555b66; }
+    .k { font-size: 12px; font-weight: 600; fill: #2f5bea; }
+  </style>
+  <rect width="640" height="340" fill="#fff"/>
+  <text class="h" x="28" y="35">프레임워크와 프로젝트 정책의 책임을 분리했다</text>
+
+  <rect x="28" y="68" width="584" height="90" rx="12" fill="#f7f7f9" stroke="#e4e5e9"/>
+  <text class="k" x="48" y="94">PROJECT POLICY</text>
+  <rect x="48" y="108" width="166" height="34" rx="8" fill="#fff" stroke="#e4e5e9"/>
+  <text class="h" x="131" y="130" text-anchor="middle">테넌트 스코프</text>
+  <rect x="237" y="108" width="166" height="34" rx="8" fill="#fff" stroke="#e4e5e9"/>
+  <text class="h" x="320" y="130" text-anchor="middle">가격 조회 기준</text>
+  <rect x="426" y="108" width="166" height="34" rx="8" fill="#fff" stroke="#e4e5e9"/>
+  <text class="h" x="509" y="130" text-anchor="middle">자동 발송 기준</text>
+
+  <rect x="28" y="186" width="584" height="126" rx="12" fill="#f5f7fe" stroke="#dce3fa"/>
+  <text class="k" x="48" y="214">LANGCHAIN</text>
+  <rect x="48" y="232" width="166" height="58" rx="8" fill="#fff" stroke="#dce3fa"/>
+  <text class="h" x="131" y="256" text-anchor="middle">모델 호출 추상화</text><text class="t" x="131" y="277" text-anchor="middle">모델 교체 범위 축소</text>
+  <rect x="237" y="232" width="166" height="58" rx="8" fill="#fff" stroke="#dce3fa"/>
+  <text class="h" x="320" y="256" text-anchor="middle">처리 단계 연결</text><text class="t" x="320" y="277" text-anchor="middle">검색 · 조회 · 생성</text>
+  <rect x="426" y="232" width="166" height="58" rx="8" fill="#fff" stroke="#dce3fa"/>
+  <text class="h" x="509" y="256" text-anchor="middle">실행 로그 확인</text><text class="t" x="509" y="277" text-anchor="middle">품질 · 사용 기록</text>
+</svg>

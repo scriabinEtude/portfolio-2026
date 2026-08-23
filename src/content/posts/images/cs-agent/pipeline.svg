@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 596" width="640" height="596" role="img">
+  <title>CS 챗봇의 답변 처리 흐름</title>
+
+  <defs>
+    <marker id="tip" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1.2 L6 4 L1 6.8" fill="none" stroke="#c4c8ce" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="tip-on" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1.2 L6 4 L1 6.8" fill="none" stroke="#2f5bea" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <style>
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+        "Malgun Gothic", system-ui, sans-serif;
+      fill: #14161a;
+    }
+    .t { font-size: 14px; font-weight: 600; letter-spacing: -0.02em; }
+    .s { font-size: 12.5px; fill: #24272c; }
+    .n { font-size: 11px; font-weight: 700; fill: #ffffff; }
+    .lbl { font-size: 12px; font-weight: 600; }
+    .side { font-size: 11.5px; fill: #24272c; }
+    .flag { font-size: 11.5px; font-weight: 600; }
+  </style>
+
+  <rect x="0" y="0" width="640" height="596" fill="#ffffff"/>
+
+  <!-- 들어오는 질문 -->
+  <rect x="24" y="16" width="360" height="44" rx="10" fill="#f7f7f9" stroke="#ededf0"/>
+  <text class="s" x="204" y="43" text-anchor="middle">고객 질문 · WhatsApp · Instagram · LINE</text>
+  <line x1="204" y1="60" x2="204" y2="79" stroke="#c4c8ce" stroke-width="1.3" marker-end="url(#tip)"/>
+
+  <!-- 1. 질문자 판별 -->
+  <rect x="24" y="84" width="360" height="58" rx="10" fill="#ffffff" stroke="#e4e5e9"/>
+  <circle cx="48" cy="104" r="9.5" fill="#2f5bea"/>
+  <text class="n" x="48" y="108" text-anchor="middle">1</text>
+  <text class="t" x="68" y="109">질문자 판별</text>
+  <text class="s" x="40" y="129">고객·관리자 / 채널 / 서비스 / 질문 언어</text>
+  <line x1="204" y1="142" x2="204" y2="161" stroke="#c4c8ce" stroke-width="1.3" marker-end="url(#tip)"/>
+
+  <!-- 2. 지식베이스 검색 -->
+  <rect x="24" y="166" width="360" height="58" rx="10" fill="#ffffff" stroke="#e4e5e9"/>
+  <circle cx="48" cy="186" r="9.5" fill="#2f5bea"/>
+  <text class="n" x="48" y="190" text-anchor="middle">2</text>
+  <text class="t" x="68" y="191">지식베이스 검색</text>
+  <text class="s" x="40" y="211">테넌트 스코프 필터 적용 후 리랭킹</text>
+  <line x1="384" y1="195" x2="430" y2="195" stroke="#d5d8dd" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <rect x="436" y="166" width="180" height="58" rx="10" fill="#f7f7f9" stroke="#ededf0"/>
+  <text class="lbl" x="450" y="191">지식베이스</text>
+  <text class="side" x="450" y="209">병원·서비스별 스코프 ID</text>
+  <line x1="204" y1="224" x2="204" y2="243" stroke="#c4c8ce" stroke-width="1.3" marker-end="url(#tip)"/>
+
+  <!-- 3. 가격 조회 (조건부) -->
+  <rect x="24" y="248" width="360" height="58" rx="10" fill="#ffffff" stroke="#e4e5e9" stroke-dasharray="5 4"/>
+  <circle cx="48" cy="268" r="9.5" fill="#2f5bea"/>
+  <text class="n" x="48" y="272" text-anchor="middle">3</text>
+  <text class="t" x="68" y="273">가격 조회</text>
+  <text class="s" x="40" y="293">가격 포함 시 원본 데이터 조회</text>
+  <line x1="384" y1="277" x2="430" y2="277" stroke="#d5d8dd" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <rect x="436" y="248" width="180" height="58" rx="10" fill="#f7f7f9" stroke="#ededf0"/>
+  <text class="lbl" x="450" y="273">가격 원본</text>
+  <text class="side" x="450" y="291">RDB · ES · 진행 중 이벤트</text>
+  <line x1="204" y1="306" x2="204" y2="325" stroke="#c4c8ce" stroke-width="1.3" marker-end="url(#tip)"/>
+
+  <!-- 4. 답변 생성 -->
+  <rect x="24" y="330" width="360" height="58" rx="10" fill="#ffffff" stroke="#e4e5e9"/>
+  <circle cx="48" cy="350" r="9.5" fill="#2f5bea"/>
+  <text class="n" x="48" y="354" text-anchor="middle">4</text>
+  <text class="t" x="68" y="355">답변 생성</text>
+  <text class="s" x="40" y="375">검색 근거와 조회값으로 초안 작성</text>
+  <line x1="204" y1="388" x2="204" y2="407" stroke="#c4c8ce" stroke-width="1.3" marker-end="url(#tip)"/>
+
+  <!-- 5. 답변 평가 -->
+  <rect x="24" y="412" width="360" height="58" rx="10" fill="#ffffff" stroke="#e4e5e9"/>
+  <circle cx="48" cy="432" r="9.5" fill="#2f5bea"/>
+  <text class="n" x="48" y="436" text-anchor="middle">5</text>
+  <text class="t" x="68" y="437">답변 평가</text>
+  <text class="s" x="40" y="457">항목별 평가 점수와 발송 기준 비교</text>
+
+  <!-- 두 갈래 출구 -->
+  <path d="M204 470 L204 484 L476 484 L476 505" fill="none" stroke="#c4c8ce" stroke-width="1.3"
+        stroke-linejoin="round" marker-end="url(#tip)"/>
+  <path d="M204 470 L204 484 L164 484 L164 505" fill="none" stroke="#2f5bea" stroke-width="1.3"
+        stroke-linejoin="round" marker-end="url(#tip-on)"/>
+  <text class="flag" x="174" y="503" fill="#2f5bea">통과</text>
+  <text class="flag" x="486" y="503">미달</text>
+
+  <rect x="24" y="516" width="280" height="58" rx="10" fill="#f4f7fe" stroke="#2f5bea"/>
+  <text class="t" x="44" y="541">고객에게 발송</text>
+  <text class="s" x="44" y="561">평가 기준 이상인 답변</text>
+
+  <rect x="336" y="516" width="280" height="58" rx="10" fill="#ffffff" stroke="#e4e5e9"/>
+  <text class="t" x="356" y="541">기존 자동 응답</text>
+  <text class="s" x="356" y="561">운영시간 안내 등 기존 답변</text>
+</svg>
