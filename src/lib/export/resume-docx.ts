@@ -10,35 +10,25 @@ import type {
   ResumeRecord,
   ResumeSection,
 } from "../types";
+import {
+  CONTENT_WIDTH,
+  type Child,
+  type Docx,
+  FONT,
+  hyperlink,
+  INK,
+  INK_2,
+  PAGE_MARGIN,
+  type Para,
+  RULE,
+  text,
+} from "./docx-kit";
 
-type Docx = typeof import("docx");
-type Para = InstanceType<Docx["Paragraph"]>;
-type Child = Para | InstanceType<Docx["Table"]>;
-
-/* A4, 좌우 18mm 여백. 길이 단위는 twip(1440 twip = 1인치, 1mm ≈ 56.7 twip). */
-const PAGE_MARGIN = { top: 907, bottom: 907, left: 1021, right: 1021 };
-const CONTENT_WIDTH = 9865; // 174mm
 const LABEL_WIDTH = 1701; // 30mm
 const WHEN_WIDTH = 1701;
 const PROJECT_INDENT = 340; // 6mm
 const PHOTO_WIDTH = 1587; // 28mm
 const PHOTO_PX = { width: 106, height: 106 };
-
-/** Word 기본 한글 글꼴. 맥·윈도 양쪽에서 안전한 조합. */
-const FONT = { ascii: "Arial", eastAsia: "맑은 고딕", hAnsi: "Arial" };
-
-/* 화면과 같은 기준. 옅은 회색 글씨는 두지 않는다. */
-const INK = "14161A";
-const INK_2 = "24272C";
-const RULE = "DCDCE0";
-const LINK = "2F5BEA";
-
-type RunOptions = {
-  size?: number;
-  color?: string;
-  bold?: boolean;
-  underline?: boolean;
-};
 
 /** 이력서 구조를 그대로 Word 문서로 옮긴다. docx는 누를 때만 불러온다. */
 export async function buildResumeDocx(resume: Resume): Promise<Blob> {
@@ -84,28 +74,6 @@ async function loadProfile(): Promise<ArrayBuffer | null> {
 }
 
 /* ── 조각들 ────────────────────────────────────────────── */
-
-function text(d: Docx, value: string, options: RunOptions = {}) {
-  return new d.TextRun({
-    text: value,
-    font: FONT,
-    size: options.size ?? 19,
-    color: options.color ?? INK_2,
-    bold: options.bold ?? false,
-    underline: options.underline === true ? {} : undefined,
-  });
-}
-
-/**
- * 눌러서 갈 수 있는 링크.
- * 이 문서는 사이트 밖에서 열리므로 경로가 아니라 절대 주소여야 한다.
- */
-function hyperlink(d: Docx, label: string, url: string, size = 19) {
-  return new d.ExternalHyperlink({
-    children: [text(d, label, { size, color: LINK, underline: true })],
-    link: url,
-  });
-}
 
 function contactLine(d: Docx, label: string, value: string, url?: string) {
   return new d.Paragraph({

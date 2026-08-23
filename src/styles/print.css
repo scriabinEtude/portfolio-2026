@@ -53,7 +53,6 @@
   .toc,
   .back-link,
   .filter-bar,
-  .dev-note,
   .no-print {
     display: none !important;
   }
@@ -121,5 +120,92 @@
   .prose a {
     color: inherit;
     border-bottom: none;
+  }
+}
+
+/* ── 묶음 문서 ─────────────────────────────────────────────
+   포트폴리오 글 전체를 한 파일로 인쇄할 때만 쓰는 판.
+   화면에는 없고, 인쇄가 시작되면 사이트 껍데기 대신 이것이 찍힌다. */
+
+.print-doc {
+  display: none;
+}
+
+@media print {
+  body.is-bundling .shell {
+    display: none !important;
+  }
+
+  body.is-bundling .print-doc {
+    display: block;
+  }
+
+  .bundle-kicker {
+    font-size: var(--t-xs);
+    font-weight: 600;
+    color: var(--fg-2);
+  }
+
+  .bundle-name {
+    margin-top: var(--s-2);
+    font-size: var(--t-4xl);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    color: var(--fg);
+  }
+
+  .bundle-contacts {
+    margin-top: var(--s-4);
+    font-size: var(--t-sm);
+    color: var(--fg-2);
+  }
+
+  .bundle-stamp {
+    margin-top: var(--s-4);
+    font-size: var(--t-sm);
+    color: var(--fg-2);
+  }
+
+  .bundle-index {
+    margin-top: var(--s-7);
+    padding-top: var(--s-4);
+    border-top: 1px solid var(--line);
+  }
+
+  .bundle-index-label {
+    font-size: var(--t-xs);
+    font-weight: 600;
+    color: var(--fg);
+    margin-bottom: var(--s-3);
+  }
+
+  .bundle-index li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--s-5);
+    padding: var(--s-2) 0;
+    border-bottom: 1px solid var(--line-2);
+    break-inside: avoid;
+  }
+
+  .bundle-index-meta {
+    flex: none;
+    font-size: var(--t-xs);
+    color: var(--fg-2);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* 글은 한 편씩 새 쪽에서 시작한다. */
+  .bundle-post {
+    break-before: page;
+  }
+
+  .bundle-post .article-head {
+    padding-top: 0;
+  }
+
+  .bundle-post .article-title {
+    font-size: var(--t-2xl);
   }
 }

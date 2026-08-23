@@ -85,3 +85,11 @@ export function formatMonth(date: string): string {
 export function formatDate(date: string): string {
   return date.replaceAll("-", ".");
 }
+
+/** 오늘 날짜를 YYYY-MM-DD로. 내려받은 문서에 "언제 기준"인지 적을 때 쓴다. */
+export function today(): string {
+  const now = new Date();
+  const month = `${now.getMonth() + 1}`.padStart(2, "0");
+  const day = `${now.getDate()}`.padStart(2, "0");
+  return `${now.getFullYear()}-${month}-${day}`;
+}
