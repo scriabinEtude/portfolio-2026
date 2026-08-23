@@ -23,6 +23,8 @@ export type Post = PostMeta & {
 export type Bullet = {
   readonly text: string;
   readonly items?: readonly string[];
+  /** 이 줄을 자세히 풀어 쓴 포트폴리오 글. 예) "/portfolio/batch-congestion-control" */
+  readonly href?: string;
 };
 
 export type BulletInput = string | Bullet;
@@ -90,6 +92,8 @@ export type ResumeSection =
       readonly kind: "records";
       readonly id: string;
       readonly title: string;
+      /** 제목 옆에 총 재직 기간을 함께 보인다. */
+      readonly showTotal?: boolean;
       readonly records: readonly ResumeRecord[];
     }
   | {
@@ -106,8 +110,7 @@ export type ResumeSection =
     };
 
 export type Resume = {
-  /** YYYY-MM-DD */
+  /** YYYY-MM-DD. 재직 중인 경력의 기간을 셀 때 기준이 된다. */
   readonly updated: string;
-  readonly tagline: string;
   readonly sections: readonly ResumeSection[];
 };

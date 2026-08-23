@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import profileUrl from "../assets/profile.jpg";
 import ResumeSections from "../components/ResumeSections";
 import { resume } from "../content/resume";
@@ -9,34 +10,36 @@ function ResumePage() {
       <header className="hero">
         <div className="hero-body">
           <h1 className="hero-name">{site.name}</h1>
-          <p className="hero-role">{site.roleEn}</p>
-          <p className="hero-lead">{resume.tagline}</p>
+          <p className="hero-role">{site.role}</p>
 
-          <div className="hero-links">
-            <a href={`mailto:${site.email}`}>{site.email}</a>
-            <a href={site.github} target="_blank" rel="noreferrer">
-              {site.githubHandle}
-            </a>
-          </div>
-
-          {import.meta.env.DEV && (
-            <p className="dev-note">
-              내용은 <code>src/content/resume.ts</code>에서 고칩니다. 이 안내는 개발 중에만
-              보입니다.
-            </p>
-          )}
+          <dl className="hero-contacts">
+            <dt>이메일</dt>
+            <dd>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+            </dd>
+            <dt>포트폴리오</dt>
+            <dd>
+              <Link to={site.portfolioPath}>{site.portfolioUrl}</Link>
+            </dd>
+          </dl>
         </div>
 
         <img
           className="hero-photo"
           src={profileUrl}
-          alt={`${site.name} 증명사진`}
-          width={312}
-          height={400}
+          alt={`${site.name} 프로필 사진`}
+          width={440}
+          height={440}
         />
       </header>
 
-      <ResumeSections sections={resume.sections} />
+      {import.meta.env.DEV && (
+        <p className="dev-note">
+          내용은 <code>src/content/resume.ts</code>에서 고칩니다. 이 안내는 개발 중에만 보입니다.
+        </p>
+      )}
+
+      <ResumeSections sections={resume.sections} asOf={resume.updated} />
     </div>
   );
 }

@@ -6,6 +6,9 @@ export const site = {
   email: "scriabinetude87@gmail.com",
   github: "https://github.com/scriabinEtude",
   githubHandle: "github.com/scriabinEtude",
+  /** 인쇄본·DOCX에서는 눌러서 갈 수 없으므로 주소를 그대로 보인다. */
+  portfolioPath: "/portfolio",
+  portfolioUrl: "scriabinetude.github.io/portfolio-2026/portfolio",
 } as const;
 
 export const nav = [

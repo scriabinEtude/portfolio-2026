@@ -1,5 +1,5 @@
-import profileUrl from "../../assets/profile.jpg";
-import { formatPeriod, joinValues, toBullet } from "../resume";
+import profileUrl from "../../assets/profile-round.png";
+import { formatMonths, formatPeriod, joinValues, toBullet, totalMonths } from "../resume";
 import { site } from "../site";
 import type {
   BulletInput,
@@ -21,8 +21,8 @@ const CONTENT_WIDTH = 9865; // 174mm
 const LABEL_WIDTH = 1701; // 30mm
 const WHEN_WIDTH = 1701;
 const PROJECT_INDENT = 340; // 6mm
-const PHOTO_WIDTH = 1701; // 30mm — 증명사진 3×4cm
-const PHOTO_PX = { width: 113, height: 151 };
+const PHOTO_WIDTH = 1587; // 28mm
+const PHOTO_PX = { width: 106, height: 106 };
 
 /** Word 기본 한글 글꼴. 맥·윈도 양쪽에서 안전한 조합. */
 const FONT = { ascii: "Arial", eastAsia: "맑은 고딕", hAnsi: "Arial" };
@@ -47,7 +47,7 @@ export async function buildResumeDocx(resume: Resume): Promise<Blob> {
   const doc = new d.Document({
     creator: site.name,
     title: `${site.name} 이력서`,
-    description: resume.tagline,
+    description: `${site.name} · ${site.role}`,
     styles: {
       default: {
         document: {
@@ -60,8 +60,8 @@ export async function buildResumeDocx(resume: Resume): Promise<Blob> {
       {
         properties: { page: { margin: PAGE_MARGIN } },
         children: [
-          ...hero(d, resume, photo),
-          ...resume.sections.flatMap((s) => section(d, s)),
+          ...hero(d, photo),
+          ...resume.sections.flatMap((s) => section(d, s, resume.updated)),
         ],
       },
     ],
@@ -93,51 +93,76 @@ function text(d: Docx, value: string, options: RunOptions = {}) {
   });
 }
 
-function hero(d: Docx, resume: Resume, photo: ArrayBuffer | null): Child[] {
+function contactLine(d: Docx, label: string, value: string) {
+  return new d.Paragraph({
+    tabStops: [{ type: d.TabStopType.LEFT, position: LABEL_WIDTH }],
+    spacing: { after: 40 },
+    children: [
+      text(d, label, { size: 18, color: INK, bold: true }),
+      new d.TextRun({
+        children: [new d.Tab(), value],
+        font: FONT,
+        size: 19,
+        color: INK_2,
+      }),
+    ],
+  });
+}
+
+function hero(d: Docx, photo: ArrayBuffer | null): Child[] {
   const identity = [
     new d.Paragraph({
-      spacing: { after: 40 },
+      spacing: { after: 60 },
       children: [text(d, site.name, { size: 44, color: INK, bold: true })],
     }),
     new d.Paragraph({
-      spacing: { after: 120 },
-      children: [text(d, `${site.role} · ${site.roleEn}`, { size: 21, color: INK_2 })],
+      spacing: { after: 200 },
+      children: [text(d, site.role, { size: 24, color: INK_2 })],
     }),
-    new d.Paragraph({
-      spacing: { after: 0 },
-      children: [text(d, resume.tagline)],
-    }),
+    contactLine(d, "이메일", site.email),
+    contactLine(d, "포트폴리오", site.portfolioUrl),
   ];
 
-  const contacts = new d.Paragraph({
-    spacing: { before: 160, after: 200 },
-    border: { bottom: { style: d.BorderStyle.SINGLE, size: 6, color: RULE, space: 8 } },
-    children: [
-      text(d, [site.email, site.githubHandle].join("   ·   "), { size: 17, color: INK_2 }),
-    ],
+  // 문단 하나에 아래 테두리만 줘서 가로 괘선으로 쓴다
+  const rule = new d.Paragraph({
+    spacing: { before: 200, after: 200 },
+    border: { bottom: { style: d.BorderStyle.SINGLE, size: 6, color: RULE, space: 2 } },
+    children: [],
   });
 
-  if (photo === null) return [...identity, contacts];
+  if (photo === null) return [...identity, rule];
 
-  // 화면과 같이 이름은 왼쪽, 사진은 오른쪽 위에 놓는다.
   const image = new d.Paragraph({
     alignment: d.AlignmentType.RIGHT,
     spacing: { after: 0 },
-    children: [new d.ImageRun({ type: "jpg", data: photo, transformation: PHOTO_PX })],
+    children: [new d.ImageRun({ type: "png", data: photo, transformation: PHOTO_PX })],
   });
 
-  return [grid(d, [CONTENT_WIDTH - PHOTO_WIDTH, PHOTO_WIDTH], [[identity, [image]]]), contacts];
+  return [grid(d, [CONTENT_WIDTH - PHOTO_WIDTH, PHOTO_WIDTH], [[identity, [image]]]), rule];
 }
 
-function sectionTitle(d: Docx, title: string) {
+function sectionTitle(d: Docx, title: string, total?: string) {
+  const children = [text(d, title, { size: 20, color: INK, bold: true })];
+  if (total) {
+    children.push(
+      new d.TextRun({
+        children: [new d.Tab(), `총 ${total}`],
+        font: FONT,
+        size: 18,
+        color: INK_2,
+      }),
+    );
+  }
+
   return new d.Paragraph({
     spacing: { before: 300, after: 140 },
+    tabStops: [{ type: d.TabStopType.RIGHT, position: CONTENT_WIDTH }],
     border: { bottom: { style: d.BorderStyle.SINGLE, size: 6, color: RULE, space: 6 } },
-    children: [text(d, title, { size: 20, color: INK, bold: true })],
+    children,
   });
 }
 
-function section(d: Docx, input: ResumeSection): Child[] {
+function section(d: Docx, input: ResumeSection, asOf: string): Child[] {
   switch (input.kind) {
     case "prose":
       return [
@@ -148,8 +173,12 @@ function section(d: Docx, input: ResumeSection): Child[] {
     case "claims":
       return [sectionTitle(d, input.title), ...input.claims.map((c) => claim(d, c))];
 
-    case "records":
-      return [sectionTitle(d, input.title), ...input.records.flatMap((r) => job(d, r))];
+    case "records": {
+      const total = input.showTotal
+        ? formatMonths(totalMonths(input.records, asOf))
+        : undefined;
+      return [sectionTitle(d, input.title, total), ...input.records.flatMap((r) => job(d, r))];
+    }
 
     case "rows":
       return [

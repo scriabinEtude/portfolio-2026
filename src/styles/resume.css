@@ -3,7 +3,7 @@
 .hero {
   padding: var(--s-9) 0 var(--s-8);
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: var(--s-7);
 }
@@ -12,27 +12,57 @@
   min-width: 0;
 }
 
-/* 3:4 증명사진. 화면 110px ≈ 인쇄 30mm로 실물 규격과 맞춘다. */
+/* 원형 프로필. 원본(3:4 증명사진)의 배경을 가장자리 방향으로 넓혀 정사각으로 만들어 둬서
+   원으로 잘라도 얼굴 주변에 여백이 남는다. */
 .hero-photo {
   flex: none;
-  width: 110px;
-  height: auto;
-  aspect-ratio: 3 / 4;
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
   object-fit: cover;
-  border-radius: var(--r-md);
-  border: 1px solid var(--line);
+}
+
+/* 사진이 폭을 가져가므로 라벨 열은 아래 섹션(--label)보다 좁게 잡는다. */
+.hero-contacts {
+  margin-top: var(--s-6);
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  column-gap: var(--s-5);
+  row-gap: var(--s-2);
+  align-items: baseline;
+}
+
+.hero-contacts dt {
+  font-size: var(--t-sm);
+  font-weight: 550;
+  color: var(--fg);
+}
+
+.hero-contacts dd {
+  font-size: var(--t-md);
+  color: var(--fg-2);
+}
+
+.hero-contacts a {
+  transition: color 0.15s var(--ease);
+}
+
+.hero-contacts a:hover {
+  color: var(--accent);
 }
 
 .hero-name {
   font-size: var(--t-4xl);
   font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1.16;
+  letter-spacing: -0.042em;
+  line-height: 1.14;
 }
 
 .hero-role {
-  margin-top: var(--s-1);
-  font-size: var(--t-base);
+  margin-top: var(--s-2);
+  font-size: var(--t-xl);
+  font-weight: 500;
+  letter-spacing: -0.02em;
   color: var(--fg-2);
 }
 
@@ -41,28 +71,6 @@
   font-size: var(--t-lg);
   color: var(--fg-2);
   max-width: 32rem;
-}
-
-.hero-links {
-  margin-top: var(--s-5);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-2) var(--s-5);
-  font-size: var(--t-md);
-  color: var(--fg-2);
-}
-
-.hero-links a {
-  border-bottom: 1px solid var(--field);
-  padding-bottom: 1px;
-  transition:
-    color 0.15s var(--ease),
-    border-color 0.15s var(--ease);
-}
-
-.hero-links a:hover {
-  color: var(--accent);
-  border-color: var(--accent);
 }
 
 /* 페이지 제목형 머리 — 포트폴리오 목록용 */
@@ -81,11 +89,21 @@
 }
 
 .section-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
   font-size: var(--t-sm);
   font-weight: 600;
   color: var(--fg);
   letter-spacing: 0.02em;
   margin-bottom: var(--s-5);
+}
+
+.section-total {
+  font-weight: 400;
+  color: var(--fg-2);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── 경력 ──────────────────────────────────────────────── */
@@ -203,6 +221,19 @@
 .claim-lead {
   font-weight: 600;
   color: var(--fg);
+}
+
+.point-link {
+  margin-left: var(--s-2);
+  font-size: var(--t-xs);
+  white-space: nowrap;
+  color: var(--accent);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  transition: border-color 0.15s var(--ease);
+}
+
+.point-link:hover {
+  border-color: var(--accent);
 }
 
 .points-sub {
@@ -345,6 +376,16 @@
   }
 
   .hero-photo {
-    width: 92px;
+    width: 104px;
+    height: 104px;
+  }
+
+  .hero-contacts {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 2px;
+  }
+
+  .hero-contacts dt {
+    margin-top: var(--s-3);
   }
 }

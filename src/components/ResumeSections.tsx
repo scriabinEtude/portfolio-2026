@@ -1,5 +1,6 @@
 import { Fragment } from "react";
-import { formatPeriod, joinValues, toBullet } from "../lib/resume";
+import { Link } from "react-router-dom";
+import { formatMonths, formatPeriod, joinValues, toBullet, totalMonths } from "../lib/resume";
 import type {
   BulletInput,
   Claim,
@@ -18,6 +19,11 @@ function Points({ items }: { readonly items: readonly BulletInput[] }) {
       {items.map(toBullet).map((bullet, index) => (
         <li key={index}>
           {bullet.text}
+          {bullet.href && (
+            <Link className="point-link" to={bullet.href}>
+              글 보기 →
+            </Link>
+          )}
           {bullet.items && bullet.items.length > 0 && (
             <ul className="points-sub">
               {bullet.items.map((item, itemIndex) => (
@@ -147,17 +153,29 @@ function SectionBody({ section }: { readonly section: ResumeSection }) {
 
 type ResumeSectionsProps = {
   readonly sections: readonly ResumeSection[];
+  /** 총 재직 기간을 셀 기준 시점. YYYY-MM-DD */
+  readonly asOf: string;
 };
 
-function ResumeSections({ sections }: ResumeSectionsProps) {
+function ResumeSections({ sections, asOf }: ResumeSectionsProps) {
   return (
     <>
-      {sections.map((section) => (
-        <section className="section" id={section.id} key={section.id}>
-          <h2 className="section-title">{section.title}</h2>
-          <SectionBody section={section} />
-        </section>
-      ))}
+      {sections.map((section) => {
+        const total =
+          section.kind === "records" && section.showTotal
+            ? formatMonths(totalMonths(section.records, asOf))
+            : null;
+
+        return (
+          <section className="section" id={section.id} key={section.id}>
+            <h2 className="section-title">
+              {section.title}
+              {total && <span className="section-total">총 {total}</span>}
+            </h2>
+            <SectionBody section={section} />
+          </section>
+        );
+      })}
     </>
   );
 }

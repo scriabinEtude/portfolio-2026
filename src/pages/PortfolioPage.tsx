@@ -27,9 +27,9 @@ function PortfolioPage() {
   return (
     <div className="page">
       <header className="hero">
-        <h1 className="hero-title">만든 것과 그때 내린 판단</h1>
+        <h1 className="hero-title">포트폴리오</h1>
         <p className="hero-lead">
-          맡았던 프로젝트를 문제 정의부터 구조 결정, 남은 과제까지 한 편씩 정리합니다.
+          Blog
         </p>
       </header>
 
