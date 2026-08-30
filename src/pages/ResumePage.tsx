@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import profileUrl from "../assets/profile.jpg";
 import ResumeSections from "../components/ResumeSections";
-import { resume } from "../content/resume";
+import ResumeTabs, { useResumeVariant } from "../components/ResumeTabs";
 import { site } from "../lib/site";
 
 function ResumePage() {
+  const { resume } = useResumeVariant();
+
   return (
     <div className="page">
       <header className="hero">
@@ -32,6 +34,8 @@ function ResumePage() {
           height={440}
         />
       </header>
+
+      <ResumeTabs />
 
       <ResumeSections sections={resume.sections} asOf={resume.updated} />
     </div>

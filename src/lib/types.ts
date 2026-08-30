@@ -25,6 +25,8 @@ export type Bullet = {
   readonly items?: readonly string[];
   /** 이 줄을 자세히 풀어 쓴 포트폴리오 글. 예) "/portfolio/batch-congestion-control" */
   readonly href?: string;
+  /** 줄머리에 붙는 짧은 말머리. 예) "문제", "해결", "성과" */
+  readonly label?: string;
 };
 
 export type BulletInput = string | Bullet;

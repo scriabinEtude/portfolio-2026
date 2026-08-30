@@ -272,13 +272,17 @@ function projectParagraphs(d: Docx, project: ResumeProject): Para[] {
   }
 
   if (project.achievements?.length) {
-    paragraphs.push(
-      new d.Paragraph({
-        indent,
-        spacing: { before: 100, after: 20 },
-        children: [text(d, "주요 성과", { size: 16, color: INK, bold: true })],
-      }),
-    );
+    // 줄마다 제 말머리(문제·해결·성과)를 달고 있으면 "주요 성과"로 묶지 않는다.
+    const labelled = project.achievements.map(toBullet).some((b) => b.label !== undefined);
+    if (!labelled) {
+      paragraphs.push(
+        new d.Paragraph({
+          indent,
+          spacing: { before: 100, after: 20 },
+          children: [text(d, "주요 성과", { size: 16, color: INK, bold: true })],
+        }),
+      );
+    }
     paragraphs.push(...bullets(d, project.achievements, PROJECT_INDENT));
   }
 
@@ -296,6 +300,7 @@ function bullets(d: Docx, items: readonly BulletInput[], offset: number): Para[]
         bullet: { level: 0 },
         indent: { left: offset + 360 },
         children: [
+          ...(bullet.label ? [text(d, `${bullet.label} · `, { bold: true })] : []),
           text(d, bullet.text),
           ...(bullet.href
             ? [text(d, "  "), hyperlink(d, "글 보기", absoluteUrl(bullet.href), 18)]

@@ -45,6 +45,7 @@ function Points({ items }: { readonly items: readonly BulletInput[] }) {
     <ul className="points">
       {items.map(toBullet).map((bullet, index) => (
         <li key={index}>
+          {bullet.label && <b className="point-label">{bullet.label}</b>}
           {bullet.text}
           {bullet.href && <PointLink href={bullet.href} />}
           {bullet.items && bullet.items.length > 0 && (
@@ -74,6 +75,8 @@ function Claims({ claims }: { readonly claims: readonly Claim[] }) {
 
 function Project({ project }: { readonly project: ResumeProject }) {
   const achievements = project.achievements ?? [];
+  // 줄마다 제 말머리(문제·해결·성과)를 달고 있으면 "주요 성과"로 묶는 게 맞지 않는다.
+  const labelled = achievements.map(toBullet).some((bullet) => bullet.label !== undefined);
 
   return (
     <article className="project">
@@ -81,7 +84,7 @@ function Project({ project }: { readonly project: ResumeProject }) {
       {project.summary && <p className="project-desc">{project.summary}</p>}
       {achievements.length > 0 && (
         <>
-          <p className="points-label">주요 성과</p>
+          {!labelled && <p className="points-label">주요 성과</p>}
           <Points items={achievements} />
         </>
       )}

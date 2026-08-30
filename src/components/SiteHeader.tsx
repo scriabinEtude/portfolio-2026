@@ -1,21 +1,24 @@
 import { Link, NavLink, useMatch } from "react-router-dom";
-import { resume } from "../content/resume";
 import { posts } from "../lib/content";
 import { buildResumeDocx } from "../lib/export/resume-docx";
 import { nav, site } from "../lib/site";
 import DownloadActions from "./DownloadActions";
 import PortfolioDownloads from "./PortfolioDownloads";
+import { useResumeVariant } from "./ResumeTabs";
 
 /** 지금 화면에서 내려받을 수 있는 것. 이력서 한 부, 또는 글 전체 한 묶음. */
 function useDownloads() {
   const onResume = useMatch("/") !== null;
   const onPortfolio = useMatch("/portfolio") !== null;
+  // 이력서는 판이 여럿이다. 지금 보고 있는 판을 그대로 내려받는다.
+  const { resume, suffix } = useResumeVariant();
 
   if (onResume) {
+    const tail = suffix ? `_${suffix}` : "";
     return (
       <DownloadActions
         subject="이력서"
-        filename={`${site.name}_이력서_${resume.updated.slice(0, 7)}`}
+        filename={`${site.name}_이력서${tail}_${resume.updated.slice(0, 7)}`}
         buildDocx={() => buildResumeDocx(resume)}
       />
     );
