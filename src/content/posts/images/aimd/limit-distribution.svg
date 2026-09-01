@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 320" width="640" height="320" role="img">
+  <title>동시 호출 한도의 시간 비중</title>
+  <desc>전체 갱신 실행 시간 중 각 동시 호출 한도가 차지한 비중이다. 상한인 6이 83.3%로 대부분을 차지하고, 5 이하로 내려간 구간은 합쳐서 16.7%다.</desc>
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif; fill: #16181c; }
+    .h { font-size: 15px; font-weight: 600; }
+    .t { font-size: 12px; fill: #555b66; }
+    .l { font-size: 12px; font-weight: 600; }
+    .v { font-size: 12px; font-weight: 600; fill: #fff; }
+  </style>
+  <rect width="640" height="320" fill="#fff"/>
+  <text class="h" x="28" y="35">대부분의 시간은 공급사가 아니라 우리가 둔 상한에 묶여 있었다</text>
+  <text class="t" x="614" y="35" text-anchor="end">실측 · 2026-08-21 전체 갱신</text>
+  <text class="t" x="28" y="56">실행 시간 중 각 동시 호출 한도가 차지한 비중</text>
+
+  <text class="l" x="100" y="102" text-anchor="end">6</text>
+  <text class="t" x="100" y="134" text-anchor="end">5</text>
+  <text class="t" x="100" y="166" text-anchor="end">4</text>
+  <text class="t" x="100" y="198" text-anchor="end">3</text>
+  <text class="t" x="100" y="230" text-anchor="end">2</text>
+  <text class="t" x="100" y="262" text-anchor="end">1</text>
+
+  <rect x="110" y="88" width="399.8" height="20" fill="#2f5bea" rx="2"/>
+  <rect x="110" y="120" width="25.9" height="20" fill="#5a9b7a" rx="2"/>
+  <rect x="110" y="152" width="34.6" height="20" fill="#5a9b7a" rx="2"/>
+  <rect x="110" y="184" width="11.0" height="20" fill="#5a9b7a" rx="2"/>
+  <rect x="110" y="216" width="7.2" height="20" fill="#5a9b7a" rx="2"/>
+  <rect x="110" y="248" width="2.5" height="20" fill="#5a9b7a" rx="2"/>
+
+  <text class="v" x="501.8" y="102" text-anchor="end">83.3%</text>
+  <text class="t" x="143.9" y="134">5.4%</text>
+  <text class="t" x="152.6" y="166">7.2%</text>
+  <text class="t" x="129.0" y="198">2.3%</text>
+  <text class="t" x="125.2" y="230">1.5%</text>
+  <text class="t" x="120.5" y="262">0.2%</text>
+
+  <text class="t" x="614" y="102" text-anchor="end">메모리 때문에 둔 상한</text>
+
+  <path d="M290 120 H298 V268 H290" fill="none" stroke="#5a9b7a" stroke-width="1.5"/>
+  <text class="l" x="308" y="190" fill="#3d7a5c">AIMD가 실제로</text>
+  <text class="l" x="308" y="208" fill="#3d7a5c">조절한 구간 — 16.7%</text>
+
+  <line x1="110" y1="282" x2="614" y2="282" stroke="#e6e8ec"/>
+  <text class="t" x="110" y="300">한도 1은 하한이라 그 밑으로는 내려가지 않는다. 배치가 멈춘 적은 없다.</text>
+</svg>

@@ -31,5 +31,5 @@
 
   <path d="M112 231 H180" stroke="#287a55" stroke-width="2"/>
   <path d="M172 225 L184 231 L172 237" fill="none" stroke="#287a55" stroke-width="2"/>
-  <text class="l" x="148" y="214" text-anchor="middle" fill="#287a55">100회 성공마다 +1</text>
+  <text class="l" x="148" y="214" text-anchor="middle" fill="#287a55">50회 성공마다 +1</text>
 </svg>
